@@ -18,21 +18,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-<header>
-  <nav class="navbar">
-    <div class="logo">Trends<span>Finance</span></div>
-    <div class="nav-links">
-      <a href="#">AI & Quantum</a>
-      <a href="#">Markets</a>
-      <a href="#">FinTech</a>
-      <a href="#">Insights</a>
-      <button id="dark-mode-toggle">🌙</button>
-    </div>
-  </nav>
-</header>
+  <header>
+    <nav class="navbar">
+      <div class="logo">Trends<span>Finance</span></div>
+      
+      <div class="nav-links">
+        <button id="dark-mode-toggle">🌙</button>
+      </div>
+    </nav>
+  </header>
 
+  <main>
+    <section class="insights-section">
+      <h2>Latest Insights</h2>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ai">AI & Quantum</button>
+        <button class="filter-btn" data-filter="market">Markets</button>
+        <button class="filter-btn" data-filter="fintech">FinTech</button>
+        <button class="filter-btn" data-filter="gold">Precious Metals</button>
+      </div>
+
+      <div id="news-container" class="posts-grid"></div>
+    </section>
+  </main>
+</body>
 <section class="hero reveal">
   <h1>Global Finance & Emerging Technology</h1>
   <p>AI • Quantum • Markets • FinTech • Precious Metals</p>
@@ -75,3 +87,4 @@
 <script src="chart.js"></script>
 </body>
 </html>
+
