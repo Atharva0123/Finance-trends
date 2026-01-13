@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF91YVYB3V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -18,21 +18,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">Trends<span>Finance</span></div>
-      
-      <div class="nav-links">
-        <button id="dark-mode-toggle">🌙</button>
-      </div>
-    </nav>
-  </header>
 
+<!-- ================= HEADER ================= -->
+<header>
+  <nav class="navbar">
+    <div class="logo">Trends<span>Finance</span></div>
+    <div class="nav-links">
+      <button id="dark-mode-toggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero reveal">
+  <div class="hero-glass">
+    <h1>Global Finance & Emerging Technology</h1>
+    <p>AI • Quantum • Markets • FinTech • Precious Metals</p>
+    <button class="cta">Explore Insights</button>
+  </div>
+  <div class="hero-glow"></div>
+</section>
+
+<!-- ================= MAIN CONTENT ================= -->
+<section class="container">
+
+  <!-- ===== PRIMARY CONTENT ===== -->
   <main>
-    <section class="insights-section">
-      <h2>Latest Insights</h2>
 
+    <!-- LATEST INSIGHTS -->
+    <section class="insights-section">
+      <div class="section-header">
+        <h2>Latest Insights</h2>
+        <span class="live-indicator">● Live</span>
+      </div>
+
+      <!-- FILTERS -->
       <div class="filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="ai">AI & Quantum</button>
@@ -41,50 +63,45 @@
         <button class="filter-btn" data-filter="gold">Precious Metals</button>
       </div>
 
+      <!-- INSIGHTS GRID -->
       <div id="news-container" class="posts-grid"></div>
     </section>
-  </main>
-</body>
-<section class="hero reveal">
-  <h1>Global Finance & Emerging Technology</h1>
-  <p>AI • Quantum • Markets • FinTech • Precious Metals</p>
-  <button class="cta">Explore Insights</button>
-</section>
 
-<section class="container">
-  <main>
-    <div class="section-header">
-      <h2>Latest Insights</h2>
-    </div>
-    <div id="news-container" class="posts-grid"></div>
+    <!-- COMMUNITY INSIGHTS -->
+    <section class="community-section">
+      <div class="section-header">
+        <h2>Community Insights</h2>
+      </div>
 
-    <div class="section-header">
-      <h2>Community Insights</h2>
-    </div>
+      <div class="create-post reveal">
+        <input id="blog-title" placeholder="Insight title" aria-label="Blog title">
+        <textarea id="blog-content" rows="4" placeholder="Write your analysis..."></textarea>
+        <button id="publishBtn">Publish</button>
+      </div>
 
-    <div class="create-post reveal">
-      <input id="blog-title" placeholder="Insight title">
-      <textarea id="blog-content" rows="4" placeholder="Write your analysis..."></textarea>
-      <button id="publishBtn">Publish</button>
-    </div>
+      <div id="blogs-container" class="posts-grid"></div>
+    </section>
 
-    <div id="blogs-container" class="posts-grid"></div>
   </main>
 
+  <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar reveal">
-    <div class="widget">
+    <div class="widget glass">
       <h3>Market Snapshot</h3>
       <div id="market-snapshot"></div>
     </div>
   </aside>
+
 </section>
 
+<!-- ================= FOOTER ================= -->
 <footer>
   <p>© 2026 Global Finance & Tech Trends</p>
 </footer>
 
+<!-- ================= SCRIPTS ================= -->
 <script src="script.js"></script>
 <script src="chart.js"></script>
+
 </body>
 </html>
-
