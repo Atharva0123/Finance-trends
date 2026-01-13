@@ -4,7 +4,23 @@ const publishBtn = document.getElementById("publishBtn");
 const darkToggle = document.getElementById("dark-mode-toggle");
 const newsContainer = document.getElementById("news-container");
 const filterButtons = document.querySelectorAll(".filter-btn");
+const revealElements = document.querySelectorAll(".reveal");
 
+const revealObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        revealObserver.unobserve(entry.target); // reveal once
+      }
+    });
+  },
+  {
+    threshold: 0.15
+  }
+);
+
+revealElements.forEach(el => revealObserver.observe(el));
 /* ===============================
    THEME
 ================================ */
@@ -195,4 +211,5 @@ filterButtons.forEach(btn => {
 ================================ */
 renderInsights();
 renderBlogs();
+
 
