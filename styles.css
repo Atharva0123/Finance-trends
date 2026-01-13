@@ -273,6 +273,17 @@ header {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
 }
+/* ================= SCROLL REVEAL ================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ================= FILTERS ================= */
 .filters {
@@ -357,3 +368,4 @@ footer {
   position: relative;
   z-index: 1;
 }
+
