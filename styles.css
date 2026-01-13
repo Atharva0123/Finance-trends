@@ -1,3 +1,28 @@
+/* ================= FUTURISTIC GRID BACKGROUND ================= */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: -1;
+  animation: gridMove 30s linear infinite;
+  opacity: 0.35;
+}
+
+[data-theme="dark"] body::before {
+  background-image:
+    linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px);
+  opacity: 0.25;
+}
+
+@keyframes gridMove {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 600px 600px, 600px 600px; }
+}
 /* ================= ROOT THEME ================= */
 :root {
   --bg-main: #f4f7fb;
@@ -284,12 +309,6 @@ header {
 .post {
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
-
-/* ================= REVEAL ================= */
-.reveal {
-  animation: fadeUp 0.8s ease forwards;
-}
-
 @keyframes fadeUp {
   from { opacity:0; transform: translateY(30px); }
   to { opacity:1; transform:none; }
@@ -332,12 +351,9 @@ footer {
   position: relative;
   overflow: hidden;
 }
-
 .hero > *,
 .container > *,
 .insights-section > * {
   position: relative;
   z-index: 1;
 }
-
-
