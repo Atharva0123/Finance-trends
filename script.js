@@ -2,25 +2,19 @@
    CONFIG
 ===================================================== */
 
-// const NEWS_API_KEY = "...";
-// const NEWS_BASE = "https://newsapi.org/v2/everything";
-// const API_BASE = "https://your-backend.onrender.com";
-
-// fetch(`${API_BASE}/api/news`);
+const API_BASE = "https://your-backend.onrender.com"; // optional
+const NEWS_ENDPOINT = `${API_BASE}/api/news`;
 
 /* =====================================================
    DOM
 ===================================================== */
-const NEWS_API_KEY = "bc383d3a104843ddbace95e7deff5ffa";
-const NEWS_BASE = "https://newsapi.org/v2/everything";
+
 const newsContainer = document.getElementById("news-container");
 const blogsContainer = document.getElementById("blogs-container");
-const bookmarksList = document.getElementById("bookmarks-list");
 
 const blogTitleInput = document.getElementById("blog-title");
 const blogContentInput = document.getElementById("blog-content");
 const publishBtn = document.getElementById("publishBtn");
-const refreshNewsBtn = document.getElementById("refresh-news");
 
 const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modal-title");
@@ -34,10 +28,47 @@ const darkModeToggle = document.getElementById("dark-mode-toggle");
 ===================================================== */
 
 const BLOGS_KEY = "trendsFinance_blogs";
-const BOOKMARKS_KEY = "trendsFinance_bookmarks";
-
 let blogs = JSON.parse(localStorage.getItem(BLOGS_KEY)) || [];
-let bookmarks = JSON.parse(localStorage.getItem(BOOKMARKS_KEY)) || [];
+
+/* =====================================================
+   DEFAULT OFFLINE DATA
+===================================================== */
+
+const DEFAULT_NEWS = [
+  {
+    title: "AI Stocks Rally as Enterprises Increase Adoption",
+    description: "Artificial intelligence companies saw strong gains as demand for enterprise AI solutions surged.",
+    url: "#",
+    urlToImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+  },
+  {
+    title: "Gold Prices Strengthen Amid Global Uncertainty",
+    description: "Gold continues to act as a safe-haven asset as investors hedge against inflation and volatility.",
+    url: "#",
+    urlToImage: "https://images.unsplash.com/photo-1610375461246-83df859d849d"
+  },
+  {
+    title: "Sensex, Nifty End Flat Ahead of Economic Data",
+    description: "Indian stock markets remained cautious as investors await key macroeconomic indicators.",
+    url: "#",
+    urlToImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3"
+  }
+];
+
+const DEFAULT_BLOGS = [
+  {
+    id: "default-1",
+    title: "Why AI & Quantum Computing Matter for Finance",
+    content:
+      "AI and Quantum Computing are reshaping finance through faster risk analysis, smarter trading strategies, and improved fraud detection. Institutions investing early may gain long-term advantages."
+  },
+  {
+    id: "default-2",
+    title: "Gold vs Stocks: Where Should Investors Look?",
+    content:
+      "Gold remains a hedge during uncertainty, while equities offer growth over time. A balanced portfolio often benefits from exposure to both assets."
+  }
+];
 
 /* =====================================================
    THEME
@@ -63,132 +94,105 @@ darkModeToggle.addEventListener("click", () => {
 });
 
 /* =====================================================
-   SENTIMENT ENGINE (FIXED)
+   SENTIMENT ENGINE
 ===================================================== */
 
-const bullishWords = [
-  "surge","rise","rally","gain","growth","record high","bullish",
-  "strong","beats","profit","optimistic","expansion","uptrend"
-];
-
-const bearishWords = [
-  "fall","drop","decline","loss","bearish","crash","sell-off",
-  "weak","concern","risk","downturn","recession","slowdown"
-];
+const bullishWords = ["surge","rise","gain","growth","record","rally","strong"];
+const bearishWords = ["fall","drop","loss","crash","decline","risk","weak"];
 
 function detectSentiment(text = "") {
   const t = text.toLowerCase();
   let score = 0;
-
-  bullishWords.forEach(w => { if (t.includes(w)) score++; });
-  bearishWords.forEach(w => { if (t.includes(w)) score--; });
-
-  if (score > 0) return { label: "Bullish", class: "bullish" };
-  if (score < 0) return { label: "Bearish", class: "bearish" };
-  return { label: "Neutral", class: "neutral" };
+  bullishWords.forEach(w => t.includes(w) && score++);
+  bearishWords.forEach(w => t.includes(w) && score--);
+  return score > 0
+    ? { label: "Bullish", class: "bullish" }
+    : score < 0
+    ? { label: "Bearish", class: "bearish" }
+    : { label: "Neutral", class: "neutral" };
 }
 
 /* =====================================================
-   CATEGORY ENGINE (STRICT)
+   CATEGORY ENGINE
 ===================================================== */
 
 function detectCategory(text = "") {
   const t = text.toLowerCase();
-
-  if (/(ai|artificial intelligence|quantum)/.test(t))
-    return { label: "AI & Quantum", class: "ai" };
-
-  if (/(sensex|nifty|stock market|equity|shares|dow|nasdaq)/.test(t))
-    return { label: "Stock Markets", class: "market" };
-
-  if (/(technology|tech company|software|hardware|semiconductor)/.test(t))
-    return { label: "Technology", class: "tech" };
-
-  if (/(fintech|digital payment|banking|neobank|blockchain|crypto)/.test(t))
-    return { label: "FinTech", class: "fintech" };
-
-  if (/(gold|silver|precious metal|bullion)/.test(t))
-    return { label: "Precious Metals", class: "gold" };
-
-  return null;
+  if (/(ai|quantum)/.test(t)) return { label: "AI & Quantum", class: "ai" };
+  if (/(sensex|nifty|stock|market)/.test(t)) return { label: "Stock Markets", class: "market" };
+  if (/(gold|silver)/.test(t)) return { label: "Precious Metals", class: "gold" };
+  if (/(fintech|banking|payments)/.test(t)) return { label: "FinTech", class: "fintech" };
+  return { label: "Technology", class: "tech" };
 }
 
 /* =====================================================
-   NEWS (STRICT + SENTIMENT + BADGES)
+   NEWS RENDER
+===================================================== */
+
+function renderNews(articles) {
+  newsContainer.innerHTML = articles
+    .map(a => {
+      const meta = `${a.title} ${a.description || ""}`;
+      const sentiment = detectSentiment(meta);
+      const category = detectCategory(meta);
+
+      return `
+      <article class="post fade-in">
+        <img src="${a.urlToImage}">
+        <div class="post-content">
+          <div class="news-meta">
+            <span class="badge ${category.class}">${category.label}</span>
+            <span class="sentiment ${sentiment.class}">${sentiment.label}</span>
+          </div>
+          <h3>${a.title}</h3>
+          <p>${a.description || ""}</p>
+          <a class="read-more" href="${a.url}" target="_blank">Read →</a>
+        </div>
+      </article>`;
+    })
+    .join("");
+}
+
+/* =====================================================
+   FETCH NEWS (WITH FALLBACK)
 ===================================================== */
 
 async function fetchNews() {
-  newsContainer.innerHTML = `<p class="loading">Loading curated news…</p>`;
-
-  const query =
-    '(AI OR "Quantum Computing") OR ("Stock Market" OR Sensex OR Nifty) OR Technology OR FinTech OR ("Gold price" OR Silver)';
+  newsContainer.innerHTML = "<p>Loading latest news…</p>";
 
   try {
-    const res = await fetch("http://localhost:5000/api/news");
+    const res = await fetch(NEWS_ENDPOINT, { timeout: 4000 });
+    if (!res.ok) throw new Error();
     const data = await res.json();
-    if (!data.articles) throw new Error();
-
-    const html = data.articles
-      .map((a, i) => {
-        const combined = `${a.title} ${a.description || ""}`;
-        const category = detectCategory(combined);
-        if (!category) return "";
-
-        const sentiment = detectSentiment(combined);
-
-        return `
-        <article class="post fade-in">
-          <img src="${a.urlToImage || "https://images.unsplash.com/photo-1559526324-593bc073d938"}">
-          <div class="post-content">
-            <div class="news-meta">
-              <span class="badge ${category.class}">${category.label}</span>
-              <span class="sentiment ${sentiment.class}">
-                ${sentiment.label}
-              </span>
-            </div>
-            <h3>${a.title}</h3>
-            <p>${a.description || ""}</p>
-            <div class="actions">
-              <a href="${a.url}" target="_blank" class="read-more">Read →</a>
-              <button class="bookmark-btn" data-id="news-${i}" data-type="news">♥</button>
-            </div>
-          </div>
-        </article>`;
-      })
-      .join("");
-
-    newsContainer.innerHTML = html || "<p>No relevant news found.</p>";
+    renderNews(data.articles.slice(0, 6));
   } catch {
-    newsContainer.innerHTML = "<p>News unavailable.</p>";
+    renderNews(DEFAULT_NEWS);
   }
 }
 
-refreshNewsBtn.onclick = fetchNews;
-
 /* =====================================================
-   COMMUNITY / BLOGS (OPTIMIZED)
+   COMMUNITY BLOGS
 ===================================================== */
 
-function renderBlogs() {
+function initBlogs() {
   if (!blogs.length) {
-    blogsContainer.innerHTML = "<p>No community insights yet.</p>";
-    return;
+    blogs = DEFAULT_BLOGS;
+    localStorage.setItem(BLOGS_KEY, JSON.stringify(blogs));
   }
+}
 
+function renderBlogs() {
   blogsContainer.innerHTML = blogs
     .map(
       b => `
-    <article class="post fade-in">
-      <div class="post-content">
-        <span class="post-tag">Community Insight</span>
-        <h3>${b.title}</h3>
-        <p>${b.content.slice(0, 200)}${b.content.length > 200 ? "…" : ""}</p>
-        <div class="actions">
+      <article class="post fade-in">
+        <div class="post-content">
+          <span class="post-tag">Community Insight</span>
+          <h3>${b.title}</h3>
+          <p>${b.content.slice(0, 180)}…</p>
           <button class="read-more" onclick="openModal('${b.id}')">Read Full →</button>
-          <button class="delete-btn" onclick="deleteBlog('${b.id}')">Delete</button>
         </div>
-      </div>
-    </article>`
+      </article>`
     )
     .join("");
 }
@@ -196,27 +200,14 @@ function renderBlogs() {
 publishBtn.addEventListener("click", () => {
   const title = blogTitleInput.value.trim();
   const content = blogContentInput.value.trim();
-  if (!title || !content) return alert("Title & content required");
+  if (!title || !content) return;
 
-  blogs.unshift({
-    id: "blog-" + Date.now(),
-    title,
-    content,
-    createdAt: new Date().toISOString()
-  });
-
+  blogs.unshift({ id: "blog-" + Date.now(), title, content });
   localStorage.setItem(BLOGS_KEY, JSON.stringify(blogs));
   blogTitleInput.value = "";
   blogContentInput.value = "";
   renderBlogs();
 });
-
-window.deleteBlog = id => {
-  if (!confirm("Delete this insight?")) return;
-  blogs = blogs.filter(b => b.id !== id);
-  localStorage.setItem(BLOGS_KEY, JSON.stringify(blogs));
-  renderBlogs();
-};
 
 /* =====================================================
    MODAL
@@ -224,21 +215,17 @@ window.deleteBlog = id => {
 
 window.openModal = id => {
   const blog = blogs.find(b => b.id === id);
-  if (!blog) return;
   modalTitle.textContent = blog.title;
   modalBody.textContent = blog.content;
   modal.style.display = "flex";
 };
 
 closeModalBtn.onclick = () => (modal.style.display = "none");
-modal.onclick = e => e.target === modal && (modal.style.display = "none");
 
 /* =====================================================
    INIT
 ===================================================== */
 
-
+initBlogs();
 fetchNews();
 renderBlogs();
-
-
