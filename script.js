@@ -4,9 +4,9 @@
 
 // const NEWS_API_KEY = "...";
 // const NEWS_BASE = "https://newsapi.org/v2/everything";
-const API_BASE = "https://your-backend.onrender.com";
+// const API_BASE = "https://your-backend.onrender.com";
 
-fetch(`${API_BASE}/api/news`);
+// fetch(`${API_BASE}/api/news`);
 
 /* =====================================================
    DOM
@@ -236,5 +236,13 @@ modal.onclick = e => e.target === modal && (modal.style.display = "none");
    INIT
 ===================================================== */
 
+/* =====================================================
+   CONFIG
+===================================================== */
+
+const NEWS_API_KEY = "bc383d3a104843ddbace95e7deff5ffa";
+const NEWS_BASE = "https://newsapi.org/v2/everything";
+
 fetchNews();
 renderBlogs();
+
