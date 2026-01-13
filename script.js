@@ -11,7 +11,8 @@
 /* =====================================================
    DOM
 ===================================================== */
-
+const NEWS_API_KEY = "bc383d3a104843ddbace95e7deff5ffa";
+const NEWS_BASE = "https://newsapi.org/v2/everything";
 const newsContainer = document.getElementById("news-container");
 const blogsContainer = document.getElementById("blogs-container");
 const bookmarksList = document.getElementById("bookmarks-list");
@@ -236,13 +237,8 @@ modal.onclick = e => e.target === modal && (modal.style.display = "none");
    INIT
 ===================================================== */
 
-/* =====================================================
-   CONFIG
-===================================================== */
-
-const NEWS_API_KEY = "bc383d3a104843ddbace95e7deff5ffa";
-const NEWS_BASE = "https://newsapi.org/v2/everything";
 
 fetchNews();
 renderBlogs();
+
 
