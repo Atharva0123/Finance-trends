@@ -326,4 +326,18 @@ footer {
   from { background-position: 0 0; }
   to { background-position: 200px 200px; }
 }
+.hero,
+.container,
+.insights-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero > *,
+.container > *,
+.insights-section > * {
+  position: relative;
+  z-index: 1;
+}
+
 
