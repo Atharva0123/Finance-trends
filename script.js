@@ -1,7 +1,4 @@
 /* =====================================================
-   CONFIG
-===================================================== */
-/* =====================================================
    DOM
 ===================================================== */
 
@@ -27,42 +24,37 @@ const BLOGS_KEY = "trendsFinance_blogs";
 let blogs = JSON.parse(localStorage.getItem(BLOGS_KEY)) || [];
 
 /* =====================================================
-   DEFAULT OFFLINE DATA
+   STATIC INSIGHTS (NO API)
 ===================================================== */
 
-const DEFAULT_NEWS = [
+const STATIC_INSIGHTS = [
   {
-    title: "AI Stocks Rally as Enterprises Increase Adoption",
-    description: "Artificial intelligence companies saw strong gains as demand for enterprise AI solutions surged.",
-    url: "#",
-    urlToImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+    title: "AI & Quantum Computing Are Redefining Financial Risk Models",
+    description:
+      "Financial institutions are increasingly adopting AI-driven analytics and exploring quantum computing to improve portfolio optimization and real-time risk assessment.",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995"
   },
   {
-    title: "Gold Prices Strengthen Amid Global Uncertainty",
-    description: "Gold continues to act as a safe-haven asset as investors hedge against inflation and volatility.",
-    url: "#",
-    urlToImage: "https://images.unsplash.com/photo-1610375461246-83df859d849d"
+    title: "Stock Markets Remain Volatile as Investors Track Global Cues",
+    description:
+      "Equity markets continue to fluctuate amid inflation concerns, central bank signals, and geopolitical developments impacting global trade.",
+    image:
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3"
   },
   {
-    title: "Sensex, Nifty End Flat Ahead of Economic Data",
-    description: "Indian stock markets remained cautious as investors await key macroeconomic indicators.",
-    url: "#",
-    urlToImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3"
-  }
-];
-
-const DEFAULT_BLOGS = [
-  {
-    id: "default-1",
-    title: "Why AI & Quantum Computing Matter for Finance",
-    content:
-      "AI and Quantum Computing are reshaping finance through faster risk analysis, smarter trading strategies, and improved fraud detection. Institutions investing early may gain long-term advantages."
+    title: "FinTech Innovation Accelerates Digital Payments Worldwide",
+    description:
+      "FinTech companies are driving growth in digital payments, neobanking, and blockchain-based financial services, reshaping consumer banking.",
+    image:
+      "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1"
   },
   {
-    id: "default-2",
-    title: "Gold vs Stocks: Where Should Investors Look?",
-    content:
-      "Gold remains a hedge during uncertainty, while equities offer growth over time. A balanced portfolio often benefits from exposure to both assets."
+    title: "Gold and Silver Continue to Attract Long-Term Investors",
+    description:
+      "Precious metals remain a preferred hedge against inflation and economic uncertainty, supporting steady demand from investors.",
+    image:
+      "https://images.unsplash.com/photo-1610375461246-83df859d849d"
   }
 ];
 
@@ -93,19 +85,23 @@ darkModeToggle.addEventListener("click", () => {
    SENTIMENT ENGINE
 ===================================================== */
 
-const bullishWords = ["surge","rise","gain","growth","record","rally","strong"];
-const bearishWords = ["fall","drop","loss","crash","decline","risk","weak"];
+const bullishWords = [
+  "growth","rise","gain","rally","strong","optimistic","accelerates"
+];
+const bearishWords = [
+  "fall","decline","risk","uncertainty","volatile","pressure"
+];
 
 function detectSentiment(text = "") {
   const t = text.toLowerCase();
   let score = 0;
+
   bullishWords.forEach(w => t.includes(w) && score++);
   bearishWords.forEach(w => t.includes(w) && score--);
-  return score > 0
-    ? { label: "Bullish", class: "bullish" }
-    : score < 0
-    ? { label: "Bearish", class: "bearish" }
-    : { label: "Neutral", class: "neutral" };
+
+  if (score > 0) return { label: "Bullish", class: "bullish" };
+  if (score < 0) return { label: "Bearish", class: "bearish" };
+  return { label: "Neutral", class: "neutral" };
 }
 
 /* =====================================================
@@ -114,60 +110,68 @@ function detectSentiment(text = "") {
 
 function detectCategory(text = "") {
   const t = text.toLowerCase();
-  if (/(ai|quantum)/.test(t)) return { label: "AI & Quantum", class: "ai" };
-  if (/(sensex|nifty|stock|market)/.test(t)) return { label: "Stock Markets", class: "market" };
-  if (/(gold|silver)/.test(t)) return { label: "Precious Metals", class: "gold" };
-  if (/(fintech|banking|payments)/.test(t)) return { label: "FinTech", class: "fintech" };
+
+  if (/(ai|quantum)/.test(t))
+    return { label: "AI & Quantum", class: "ai" };
+
+  if (/(stock|market|equity|investor)/.test(t))
+    return { label: "Stock Markets", class: "market" };
+
+  if (/(fintech|payment|banking|blockchain)/.test(t))
+    return { label: "FinTech", class: "fintech" };
+
+  if (/(gold|silver|precious)/.test(t))
+    return { label: "Precious Metals", class: "gold" };
+
   return { label: "Technology", class: "tech" };
 }
 
 /* =====================================================
-   NEWS RENDER
+   RENDER STATIC INSIGHTS
 ===================================================== */
 
-async function fetchNews() {
-  // Always start with fallback (instant UX)
-  renderNews(DEFAULT_NEWS);
+function renderInsights() {
+  newsContainer.innerHTML = STATIC_INSIGHTS.map(item => {
+    const meta = `${item.title} ${item.description}`;
+    const sentiment = detectSentiment(meta);
+    const category = detectCategory(meta);
 
-  // If offline → stop here
-  if (!navigator.onLine) return;
-
-  // If backend URL not set → stop here
-  if (!window.BACKEND_URL) return;
-
-  try {
-    const res = await fetch(`${window.BACKEND_URL}/api/news`);
-    if (!res.ok) throw new Error();
-
-    const data = await res.json();
-    if (data.articles && data.articles.length) {
-      renderNews(data.articles.slice(0, 6));
-    }
-  } catch (err) {
-    console.warn("Using fallback news (backend unreachable)");
-  }
+    return `
+      <article class="post fade-in">
+        <img src="${item.image}">
+        <div class="post-content">
+          <div class="news-meta">
+            <span class="badge ${category.class}">${category.label}</span>
+            <span class="sentiment ${sentiment.class}">
+              ${sentiment.label}
+            </span>
+          </div>
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 /* =====================================================
-   FETCH NEWS (WITH FALLBACK)
+   COMMUNITY BLOGS (OPTIMIZED)
 ===================================================== */
 
-async function fetchNews() {
-  newsContainer.innerHTML = "<p>Loading latest news…</p>";
-
-  try {
-    const res = await fetch(NEWS_ENDPOINT, { timeout: 4000 });
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-    renderNews(data.articles.slice(0, 6));
-  } catch {
-    renderNews(DEFAULT_NEWS);
+const DEFAULT_BLOGS = [
+  {
+    id: "default-1",
+    title: "How AI Is Transforming Investment Decision-Making",
+    content:
+      "AI-driven models enable investors to analyze massive datasets, identify trends faster, and reduce emotional bias in decision-making."
+  },
+  {
+    id: "default-2",
+    title: "Why FinTech Is Critical for Financial Inclusion",
+    content:
+      "Digital financial services are expanding access to banking, credit, and payments, especially in emerging markets."
   }
-}
-
-/* =====================================================
-   COMMUNITY BLOGS
-===================================================== */
+];
 
 function initBlogs() {
   if (!blogs.length) {
@@ -177,19 +181,18 @@ function initBlogs() {
 }
 
 function renderBlogs() {
-  blogsContainer.innerHTML = blogs
-    .map(
-      b => `
-      <article class="post fade-in">
-        <div class="post-content">
-          <span class="post-tag">Community Insight</span>
-          <h3>${b.title}</h3>
-          <p>${b.content.slice(0, 180)}…</p>
-          <button class="read-more" onclick="openModal('${b.id}')">Read Full →</button>
-        </div>
-      </article>`
-    )
-    .join("");
+  blogsContainer.innerHTML = blogs.map(b => `
+    <article class="post fade-in">
+      <div class="post-content">
+        <span class="post-tag">Community Insight</span>
+        <h3>${b.title}</h3>
+        <p>${b.content.slice(0, 180)}…</p>
+        <button class="read-more" onclick="openModal('${b.id}')">
+          Read Full →
+        </button>
+      </div>
+    </article>
+  `).join("");
 }
 
 publishBtn.addEventListener("click", () => {
@@ -197,7 +200,12 @@ publishBtn.addEventListener("click", () => {
   const content = blogContentInput.value.trim();
   if (!title || !content) return;
 
-  blogs.unshift({ id: "blog-" + Date.now(), title, content });
+  blogs.unshift({
+    id: "blog-" + Date.now(),
+    title,
+    content
+  });
+
   localStorage.setItem(BLOGS_KEY, JSON.stringify(blogs));
   blogTitleInput.value = "";
   blogContentInput.value = "";
@@ -216,13 +224,12 @@ window.openModal = id => {
 };
 
 closeModalBtn.onclick = () => (modal.style.display = "none");
+modal.onclick = e => e.target === modal && (modal.style.display = "none");
 
 /* =====================================================
    INIT
 ===================================================== */
 
 initBlogs();
-fetchNews();
+renderInsights();
 renderBlogs();
-
-
