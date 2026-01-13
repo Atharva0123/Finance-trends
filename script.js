@@ -129,28 +129,27 @@ function detectCategory(text = "") {
    NEWS RENDER
 ===================================================== */
 
-function renderNews(articles) {
-  newsContainer.innerHTML = articles
-    .map(a => {
-      const meta = `${a.title} ${a.description || ""}`;
-      const sentiment = detectSentiment(meta);
-      const category = detectCategory(meta);
+async function fetchNews() {
+  // Always start with fallback (instant UX)
+  renderNews(DEFAULT_NEWS);
 
-      return `
-      <article class="post fade-in">
-        <img src="${a.urlToImage}">
-        <div class="post-content">
-          <div class="news-meta">
-            <span class="badge ${category.class}">${category.label}</span>
-            <span class="sentiment ${sentiment.class}">${sentiment.label}</span>
-          </div>
-          <h3>${a.title}</h3>
-          <p>${a.description || ""}</p>
-          <a class="read-more" href="${a.url}" target="_blank">Read →</a>
-        </div>
-      </article>`;
-    })
-    .join("");
+  // If offline → stop here
+  if (!navigator.onLine) return;
+
+  // If backend URL not set → stop here
+  if (!window.BACKEND_URL) return;
+
+  try {
+    const res = await fetch(`${window.BACKEND_URL}/api/news`);
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    if (data.articles && data.articles.length) {
+      renderNews(data.articles.slice(0, 6));
+    }
+  } catch (err) {
+    console.warn("Using fallback news (backend unreachable)");
+  }
 }
 
 /* =====================================================
@@ -229,3 +228,4 @@ closeModalBtn.onclick = () => (modal.style.display = "none");
 initBlogs();
 fetchNews();
 renderBlogs();
+
