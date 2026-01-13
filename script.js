@@ -1,10 +1,6 @@
 /* =====================================================
    CONFIG
 ===================================================== */
-
-const API_BASE = "https://your-backend.onrender.com"; // optional
-const NEWS_ENDPOINT = `${API_BASE}/api/news`;
-
 /* =====================================================
    DOM
 ===================================================== */
@@ -228,4 +224,5 @@ closeModalBtn.onclick = () => (modal.style.display = "none");
 initBlogs();
 fetchNews();
 renderBlogs();
+
 
