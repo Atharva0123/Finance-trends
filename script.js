@@ -2,6 +2,8 @@ const newsContainer = document.getElementById("news-container");
 const blogsContainer = document.getElementById("blogs-container");
 const publishBtn = document.getElementById("publishBtn");
 const darkToggle = document.getElementById("dark-mode-toggle");
+const newsContainer = document.getElementById("news-container");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
 /* ===============================
    THEME
@@ -127,8 +129,8 @@ const INSIGHTS = [
 
 function renderInsights() {
   newsContainer.innerHTML = INSIGHTS.map(i => `
-    <article class="post reveal">
-      <img src="${i.image}" alt="${i.title}">
+    <article class="post reveal" data-category="${i.category}">
+      <img src="${i.image}">
       <div class="post-content">
         <span class="badge ${i.category}">${i.category.toUpperCase()}</span>
         <span class="sentiment ${i.sentiment}">${i.sentiment}</span>
@@ -138,7 +140,6 @@ function renderInsights() {
     </article>
   `).join("");
 }
-
 /* ===============================
    COMMUNITY BLOGS (UNCHANGED)
 ================================ */
@@ -177,9 +178,21 @@ function renderBlogs() {
     </article>
   `).join("");
 }
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".filter-btn.active").classList.remove("active");
+    btn.classList.add("active");
 
+    const filter = btn.dataset.filter;
+    document.querySelectorAll(".post").forEach(post => {
+      const match = filter === "all" || post.dataset.category === filter;
+      post.classList.toggle("hide", !match);
+    });
+  });
+});
 /* ===============================
    INIT
 ================================ */
 renderInsights();
 renderBlogs();
+
