@@ -1,3 +1,4 @@
+/* ================= ROOT THEME ================= */
 :root {
   --bg-main: #f4f7fb;
   --bg-card: #ffffff;
@@ -14,35 +15,48 @@
 
   --radius: 14px;
   --shadow: 0 12px 30px rgba(0,0,0,0.08);
+  --glass: rgba(255,255,255,0.65);
 }
 
+/* ================= DARK MODE ================= */
 [data-theme="dark"] {
-  --bg-main: #0f172a;
+  --bg-main: #0b1220;
   --bg-card: #020617;
   --bg-header: #020617;
 
   --text-main: #f1f5f9;
   --text-muted: #94a3b8;
+
+  --shadow: 0 20px 50px rgba(0,0,0,0.45);
+  --glass: rgba(15,23,42,0.65);
 }
 
+/* ================= RESET ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--bg-main);
   color: var(--text-main);
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.35s ease, color 0.35s ease;
+  line-height: 1.6;
 }
 
+/* ================= HEADER ================= */
 header {
   background: var(--bg-header);
   position: sticky;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .navbar {
@@ -64,6 +78,7 @@ header {
   color: #38bdf8;
 }
 
+/* ================= NAV ================= */
 .nav-links a,
 .nav-links button {
   color: white;
@@ -72,41 +87,69 @@ header {
   border: none;
   cursor: pointer;
   font-weight: 500;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.nav-links button:hover {
+  transform: scale(1.1);
+}
+
+/* ================= HERO ================= */
 .hero {
+  position: relative;
   text-align: center;
   padding: 6rem 1rem;
-  background: linear-gradient(rgba(10,37,64,0.9), rgba(10,37,64,0.95)),
+  background:
+    radial-gradient(circle at top, rgba(56,189,248,0.25), transparent 40%),
+    linear-gradient(rgba(10,37,64,0.9), rgba(10,37,64,0.95)),
     url("https://images.unsplash.com/photo-1559526324-593bc073d938") center/cover;
   color: white;
+  overflow: hidden;
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  letter-spacing: -0.02em;
 }
 
 .hero p {
-  max-width: 600px;
+  max-width: 640px;
   margin: 1rem auto;
   opacity: 0.9;
 }
 
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(56,189,248,0.15), transparent);
+  animation: shimmer 6s infinite linear;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* ================= CTA ================= */
 .cta {
   margin-top: 1.5rem;
-  padding: 0.8rem 1.6rem;
+  padding: 0.85rem 1.8rem;
   border-radius: var(--radius);
   background: var(--accent);
   color: white;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s;
+  font-weight: 600;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .cta:hover {
   transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(37,99,235,0.35);
 }
 
+/* ================= LAYOUT ================= */
 .container {
   max-width: 1200px;
   margin: auto;
@@ -122,26 +165,36 @@ header {
   }
 }
 
+/* ================= SECTIONS ================= */
 .section-header {
   margin-bottom: 1rem;
 }
 
+.section-header h2 {
+  font-size: 1.6rem;
+}
+
+/* ================= GRID ================= */
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-  gap: 1.5rem;
+  gap: 1.6rem;
 }
 
-.post, .widget, .create-post {
+/* ================= CARDS ================= */
+.post,
+.widget,
+.create-post {
   background: var(--bg-card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  transition: transform 0.25s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .post:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.15);
 }
 
 .post img {
@@ -154,10 +207,11 @@ header {
   padding: 1.2rem;
 }
 
+/* ================= BADGES ================= */
 .badge {
   display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -167,9 +221,11 @@ header {
 .badge.fintech { background:#ecfeff; color:#155e75; }
 .badge.gold { background:#fff7ed; color:#92400e; }
 
+/* ================= SENTIMENT ================= */
 .sentiment.bullish { color: var(--success); font-weight:600; }
 .sentiment.bearish { color: var(--danger); font-weight:600; }
 
+/* ================= CREATE POST ================= */
 .create-post {
   padding: 1.2rem;
   margin-bottom: 2rem;
@@ -178,27 +234,22 @@ header {
 .create-post input,
 .create-post textarea {
   width: 100%;
-  padding: 0.7rem;
+  padding: 0.75rem;
   margin-bottom: 0.6rem;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #cbd5f5;
+  background: transparent;
+  color: var(--text-main);
 }
 
-footer {
-  text-align: center;
-  padding: 2rem;
-  background: var(--bg-header);
-  color: white;
+.create-post input:focus,
+.create-post textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
 }
 
-.reveal {
-  animation: fadeUp 0.8s ease forwards;
-}
-
-@keyframes fadeUp {
-  from { opacity:0; transform: translateY(30px); }
-  to { opacity:1; transform:none; }
-}
+/* ================= FILTERS ================= */
 .filters {
   display: flex;
   gap: 0.6rem;
@@ -207,7 +258,7 @@ footer {
 }
 
 .filter-btn {
-  padding: 0.4rem 0.9rem;
+  padding: 0.45rem 1rem;
   border-radius: 999px;
   border: 1px solid #c7d2fe;
   background: transparent;
@@ -217,16 +268,13 @@ footer {
   transition: all 0.25s ease;
 }
 
-.filter-btn:hover {
-  background: var(--accent);
-  color: white;
-}
-
+.filter-btn:hover,
 .filter-btn.active {
   background: var(--accent);
   color: white;
 }
 
+/* ================= FILTER ANIMATION ================= */
 .post.hide {
   opacity: 0;
   transform: scale(0.95);
@@ -235,4 +283,23 @@ footer {
 
 .post {
   transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* ================= REVEAL ================= */
+.reveal {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(30px); }
+  to { opacity:1; transform:none; }
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-header);
+  color: white;
+  font-size: 0.9rem;
 }
