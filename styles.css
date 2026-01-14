@@ -16,6 +16,8 @@
   --radius: 14px;
   --shadow: 0 12px 30px rgba(0,0,0,0.08);
   --glass: rgba(255,255,255,0.65);
+
+  --grid-glow: rgba(37,99,235,0.35);
 }
 
 /* ================= DARK MODE ================= */
@@ -29,6 +31,8 @@ html[data-theme="dark"] {
 
   --shadow: 0 20px 50px rgba(0,0,0,0.45);
   --glass: rgba(15,23,42,0.65);
+
+  --grid-glow: rgba(56,189,248,0.45);
 }
 
 /* ================= RESET ================= */
@@ -39,13 +43,17 @@ html[data-theme="dark"] {
   font-family: Inter, system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--bg-main);
   color: var(--text-main);
   line-height: 1.6;
   transition: background 0.35s ease, color 0.35s ease;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* ================= FUTURISTIC GRID BACKGROUND ================= */
@@ -53,25 +61,52 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
+
   background-image:
-    linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(37,99,235,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.1) 1px, transparent 1px);
+
   background-size: 60px 60px;
-  animation: gridMove 30s linear infinite;
+
+  animation:
+    gridMove 35s linear infinite,
+    gridGlow 6s ease-in-out infinite;
+
   opacity: 0.35;
-  z-index: -1;
+  pointer-events: none;
+  z-index: 0;
 }
 
 html[data-theme="dark"] body::before {
   background-image:
-    linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px);
+    linear-gradient(rgba(56,189,248,0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.14) 1px, transparent 1px);
+
   opacity: 0.25;
 }
 
+/* ================= GRID ANIMATIONS ================= */
 @keyframes gridMove {
   from { background-position: 0 0; }
   to { background-position: 600px 600px; }
+}
+
+@keyframes gridGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px var(--grid-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px var(--grid-glow));
+  }
+}
+
+/* ================= LAYER FIX ================= */
+header,
+main,
+.container,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* ================= HEADER ================= */
@@ -99,7 +134,9 @@ header {
   font-weight: 700;
 }
 
-.logo span { color: #38bdf8; }
+.logo span {
+  color: #38bdf8;
+}
 
 /* ================= NAV ================= */
 .nav-links button {
@@ -111,7 +148,9 @@ header {
   transition: transform 0.2s ease;
 }
 
-.nav-links button:hover { transform: scale(1.15); }
+.nav-links button:hover {
+  transform: scale(1.15);
+}
 
 /* ================= HERO ================= */
 .hero {
@@ -165,10 +204,12 @@ header {
 }
 
 @media (max-width: 900px) {
-  .container { grid-template-columns: 1fr; }
+  .container {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* ================= GRID ================= */
+/* ================= POSTS GRID ================= */
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
@@ -189,6 +230,27 @@ header {
 .post:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+}
+
+/* ================= POST IMAGES (REDUCED SIZE) ================= */
+.post img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+#blogs-container .post img {
+  height: 110px;
+}
+
+#news-container .post img {
+  height: 145px;
+}
+
+/* ================= CONTENT ================= */
+.post-content {
+  padding: 1.2rem;
 }
 
 /* ================= BADGES ================= */
