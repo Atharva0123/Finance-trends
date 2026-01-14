@@ -1,9 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("market-snapshot");
+  if (!container) return; // ✅ prevents GitHub runtime crash
+
+  // Clear container (safe re-render)
+  container.innerHTML = "";
+
   const script = document.createElement("script");
-  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js";
+  script.src =
+    "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js";
+  script.type = "text/javascript";
   script.async = true;
 
-  script.innerHTML = JSON.stringify({
+  // Detect theme from HTML attribute
+  const isDark =
+    document.documentElement.getAttribute("data-theme") === "dark";
+
+  const config = {
     width: "100%",
     height: "380",
     symbolsGroups: [
@@ -24,9 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ],
     showSymbolLogo: true,
-    colorTheme: "light",
+    colorTheme: isDark ? "dark" : "light",
     locale: "en"
-  });
+  };
 
-  document.getElementById("market-snapshot").appendChild(script);
+  // TradingView requires JSON as text
+  script.innerHTML = JSON.stringify(config);
+
+  container.appendChild(script);
 });
