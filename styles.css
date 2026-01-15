@@ -178,24 +178,76 @@ header {
 }
 
 .debt-ribbon h2 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   margin-bottom: 1.5rem;
   background: linear-gradient(90deg, #38bdf8, #2563eb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Ribbon Container */
+/* ================= FRAME ================= */
 .debt-frame {
   position: relative;
-  border-radius: 18px;
+  width: 100%;
+  margin: auto;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(37,99,235,0.25);
-  background: linear-gradient(
-    135deg,
-    rgba(37,99,235,0.12),
-    rgba(56,189,248,0.12)
-  );
+  background: #000;
+  box-shadow: 0 35px 90px rgba(37,99,235,0.3);
+}
+
+/* Maintain original ratio (1110 x 2450) */
+.debt-frame.tall {
+  aspect-ratio: 1110 / 2450;
+  max-height: 85vh; /* prevent absurd height on large screens */
+}
+
+/* Glow border */
+.debt-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(56,189,248,0.4);
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* ================= IFRAME ================= */
+.debt-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: black;
+}
+
+/* ================= MOBILE OPTIMIZATION ================= */
+@media (max-width: 768px) {
+  .debt-frame.tall {
+    max-height: 75vh;
+  }
+
+  .debt-ribbon h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ================= SOURCE NOTE ================= */
+.debt-note {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.debt-note a {
+  color: #38bdf8;
+  text-decoration: none;
 }
 
 /* Glow border */
@@ -359,4 +411,5 @@ footer {
   color: white;
   font-size: 0.9rem;
 }
+
 
