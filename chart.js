@@ -1,47 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("market-snapshot");
-  if (!container) return; // ✅ prevents GitHub runtime crash
 
-  // Clear container (safe re-render)
-  container.innerHTML = "";
+  function loadTradingView(containerId, symbol) {
+    new TradingView.widget({
+      container_id: containerId,
+      width: "100%",
+      height: 180,
+      symbol,
+      interval: "D",
+      timezone: "Etc/UTC",
+      theme: document.documentElement.getAttribute("data-theme") === "dark"
+        ? "dark"
+        : "light",
+      style: "3",
+      locale: "en",
+      hide_top_toolbar: true,
+      hide_legend: true,
+      allow_symbol_change: false,
+      enable_publishing: false,
+      save_image: false
+    });
+  }
 
-  const script = document.createElement("script");
-  script.src =
-    "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js";
-  script.type = "text/javascript";
-  script.async = true;
+  function loadWidgets() {
+    loadTradingView("tv-gold", "TVC:GOLD");
+    loadTradingView("tv-silver", "TVC:SILVER");
+    loadTradingView("tv-bitcoin", "BINANCE:BTCUSDT");
+    loadTradingView("tv-crude", "TVC:USOIL");
 
-  // Detect theme from HTML attribute
-  const isDark =
-    document.documentElement.getAttribute("data-theme") === "dark";
+    new TradingView.widget({
+      container_id: "tv-heatmap",
+      width: "100%",
+      height: 280,
+      dataSource: "ECONOMICS",
+      blockSize: "market_cap_basic",
+      blockColor: "change",
+      locale: "en",
+      colorTheme:
+        document.documentElement.getAttribute("data-theme") === "dark"
+          ? "dark"
+          : "light"
+    });
+  }
 
-  const config = {
-    width: "100%",
-    height: "380",
-    symbolsGroups: [
-      {
-        name: "India",
-        symbols: [
-          { name: "BSE:SENSEX", displayName: "Sensex" },
-          { name: "NSE:NIFTY", displayName: "Nifty 50" }
-        ]
-      },
-      {
-        name: "Global",
-        symbols: [
-          { name: "NASDAQ:NDX", displayName: "NASDAQ" },
-          { name: "TVC:GOLD", displayName: "Gold" },
-          { name: "BINANCE:BTCUSDT", displayName: "Bitcoin" }
-        ]
-      }
-    ],
-    showSymbolLogo: true,
-    colorTheme: isDark ? "dark" : "light",
-    locale: "en"
-  };
-
-  // TradingView requires JSON as text
-  script.innerHTML = JSON.stringify(config);
-
-  container.appendChild(script);
+  const tvScript = document.createElement("script");
+  tvScript.src = "https://s3.tradingview.com/tv.js";
+  tvScript.onload = loadWidgets;
+  document.body.appendChild(tvScript);
 });
