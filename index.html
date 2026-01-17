@@ -37,13 +37,22 @@
     <div class="grid-bg"></div>
     <h1>Global Finance & Emerging Technology</h1>
     <p>AI • Quantum • Markets • FinTech • Precious Metals</p>
-    <button class="cta">Explore Insights</button>
+
+    <!-- ✅ Navigate to Latest Insights -->
+    <a href="#latest-insights">
+      <button class="cta">Explore Insights</button>
+    </a>
+
   </div>
   <div class="hero-glow"></div>
 </section>
 
+<!-- ================= WORLD DEBT ================= -->
 <section class="debt-ribbon reveal">
-  <h2>🌍 Global Debt — Live</h2>
+  <h2>
+    🌍 Global Debt
+    <span class="live-pill breaking">LIVE</span>
+  </h2>
 
   <div class="debt-frame tall">
     <iframe
@@ -62,18 +71,22 @@
     </a>
   </p>
 </section>
-  
+
 <!-- ================= MAIN CONTENT ================= -->
 <section class="container">
 
   <!-- ===== PRIMARY CONTENT ===== -->
   <main>
 
-    <!-- LATEST INSIGHTS -->
-    <section class="insights-section">
+    <!-- ================= LATEST INSIGHTS ================= -->
+    <section class="insights-section" id="latest-insights">
       <div class="section-header">
         <h2>Latest Insights</h2>
-        <span class="live-indicator">● Live</span>
+
+        <!-- ✅ Breaking Pulse -->
+        <span class="live-indicator breaking">
+          <span class="pulse-dot"></span> LIVE
+        </span>
       </div>
 
       <!-- FILTERS -->
@@ -88,16 +101,18 @@
       <!-- INSIGHTS GRID -->
       <div id="news-container" class="posts-grid"></div>
     </section>
+
+    <!-- ================= BLOOMBERG ================= -->
     <section class="bloomberg reveal">
       <div class="section-header">
         <h2>Bloomberg-Style Global Brief</h2>
-        <span class="bb-tag">MARKET INTELLIGENCE</span>
+        <span class="live-pill breaking">LIVE</span>
       </div>
 
       <div class="bb-list" id="bb-news"></div>
     </section>
 
-    <!-- COMMUNITY INSIGHTS -->
+    <!-- ================= COMMUNITY ================= -->
     <section class="community-section">
       <div class="section-header">
         <h2>Community Insights</h2>
@@ -114,46 +129,47 @@
 
   </main>
 
-<aside class="sidebar reveal">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar reveal">
 
-  <!-- MARKET SNAPSHOT -->
-  <div class="widget">
-    <h3>📊 Market Snapshot</h3>
-    <div id="market-snapshot"></div>
-  </div>
+    <div class="widget">
+      <h3>📊 Market Snapshot <span class="live-pill breaking">LIVE</span></h3>
+      <div id="market-snapshot"></div>
+    </div>
 
-<div class="widget reveal">
-  <h3>Markets Overview</h3>
+    <div class="widget reveal">
+      <h3>Markets Overview</h3>
 
-  <div class="tv-block glow-refresh">
-    <div class="tv-title">Gold (XAU / USD)</div>
-    <div id="tv-gold"></div>
-  </div>
+      <div class="tv-block glow-refresh">
+        <div class="tv-title">Gold (XAU / USD)</div>
+        <div id="tv-gold"></div>
+      </div>
 
-  <div class="tv-block glow-refresh">
-    <div class="tv-title">Silver (XAG / USD)</div>
-    <div id="tv-silver"></div>
-  </div>
+      <div class="tv-block glow-refresh">
+        <div class="tv-title">Silver (XAG / USD)</div>
+        <div id="tv-silver"></div>
+      </div>
 
-  <div class="tv-block glow-refresh">
-    <div class="tv-title">Bitcoin (BTC / USD)</div>
-    <div id="tv-bitcoin"></div>
-  </div>
+      <div class="tv-block glow-refresh">
+        <div class="tv-title">Bitcoin (BTC / USD)</div>
+        <div id="tv-bitcoin"></div>
+      </div>
 
-  <div class="tv-block glow-refresh">
-    <div class="tv-title">Crude Oil (WTI)</div>
-    <div id="tv-crude"></div>
-  </div>
-</div>
+      <div class="tv-block glow-refresh">
+        <div class="tv-title">Crude Oil (WTI)</div>
+        <div id="tv-crude"></div>
+      </div>
+    </div>
 
-<div class="widget reveal">
-  <h3>🌍 Economic Indicators Heatmap</h3>
-  <div id="tv-heatmap" class="glow-refresh"></div>
-</div>
+    <div class="widget reveal">
+      <h3>
+        🌍 Economic Indicators
+        <span class="live-pill breaking">LIVE</span>
+      </h3>
+      <div id="tv-heatmap" class="glow-refresh"></div>
+    </div>
 
-</aside>
-
-
+  </aside>
 </section>
 
 <!-- ================= FOOTER ================= -->
@@ -168,12 +184,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
