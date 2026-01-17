@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const REFRESH_INTERVAL = 180000; // 3 minutes
 
-  function loadTradingView(containerId, symbol) {
+  function theme() {
+    return document.documentElement.getAttribute("data-theme") === "dark"
+      ? "dark"
+      : "light";
+  }
+
+  function loadMiniChart(containerId, symbol) {
     new TradingView.widget({
       container_id: containerId,
       width: "100%",
@@ -8,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       symbol,
       interval: "D",
       timezone: "Etc/UTC",
-      theme: document.documentElement.getAttribute("data-theme") === "dark"
-        ? "dark"
-        : "light",
+      theme: theme(),
       style: "3",
       locale: "en",
       hide_top_toolbar: true,
@@ -20,12 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
       save_image: false
     });
   }
+  function loadAllCharts() {
+    document.querySelectorAll(".glow-refresh").forEach(el => {
+      el.classList.remove("pulse");
+      void el.offsetWidth; // reflow
+      el.classList.add("pulse");
+    });
 
-  function loadWidgets() {
-    loadTradingView("tv-gold", "TVC:GOLD");
-    loadTradingView("tv-silver", "TVC:SILVER");
-    loadTradingView("tv-bitcoin", "BINANCE:BTCUSDT");
-    loadTradingView("tv-crude", "TVC:USOIL");
+    loadMiniChart("tv-gold", "TVC:GOLD");
+    loadMiniChart("tv-silver", "TVC:SILVER");
+    loadMiniChart("tv-bitcoin", "BINANCE:BTCUSDT");
+    loadMiniChart("tv-crude", "TVC:USOIL");
 
     new TradingView.widget({
       container_id: "tv-heatmap",
@@ -35,15 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
       blockSize: "market_cap_basic",
       blockColor: "change",
       locale: "en",
-      colorTheme:
-        document.documentElement.getAttribute("data-theme") === "dark"
-          ? "dark"
-          : "light"
+      colorTheme: theme()
     });
   }
 
   const tvScript = document.createElement("script");
   tvScript.src = "https://s3.tradingview.com/tv.js";
-  tvScript.onload = loadWidgets;
+  tvScript.onload = () => {
+    loadAllCharts();
+    setInterval(loadAllCharts, REFRESH_INTERVAL);
+  };
+
   document.body.appendChild(tvScript);
 });
