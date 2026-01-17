@@ -111,8 +111,9 @@
       <div class="bb-list" id="bb-news"></div>
     </section>
 
-  <section class="community-section reveal" id="community">
+<section class="community-section reveal" id="community">
 
+  <!-- HEADER -->
   <div class="community-header">
     <div>
       <h2>Community Insights</h2>
@@ -120,39 +121,39 @@
         Analyst notes, independent research & market perspectives from readers
       </p>
     </div>
-
-    <span class="community-badge">COMMUNITY</span>
+    <span class="community-pill">COMMUNITY</span>
   </div>
 
-  <!-- CREATE POST -->
+  <!-- COMPOSE CARD -->
   <div class="community-compose">
-    <div class="compose-header">
-      <span class="compose-dot"></span>
+    <div class="compose-title">
+      <span class="compose-icon">✍</span>
       <h3>Share an Insight</h3>
     </div>
 
-    <input
-      id="blog-title"
-      placeholder="Insight title (e.g. AI valuations entering bubble territory?)"
-      maxlength="80"
-    />
+    <div class="compose-fields">
+      <input
+        id="blog-title"
+        placeholder="Insight title (e.g. AI valuations entering bubble territory)"
+      />
 
-    <textarea
-      id="blog-content"
-      rows="4"
-      placeholder="Write your analysis, observation or thesis…"
-    ></textarea>
-
-      <div class="compose-actions">
-        <span class="compose-hint">Visible to all users</span>
-        <button id="publishBtn">Publish Insight</button>
-      </div>
+      <textarea
+        id="blog-content"
+        rows="4"
+        placeholder="Write your analysis, observation or thesis…"
+      ></textarea>
     </div>
 
-  <!-- POSTS -->
-    <div id="blogs-container" class="community-grid"></div>
+    <div class="compose-footer">
+      <span class="compose-note">Visible to all users</span>
+      <button id="publishBtn">Publish Insight</button>
+    </div>
+  </div>
 
-  </section>
+  <!-- POSTS GRID -->
+  <div id="blogs-container" class="community-grid"></div>
+
+</section>
 
 
   </main>
@@ -212,5 +213,6 @@
 
 </body>
 </html>
+
 
 
