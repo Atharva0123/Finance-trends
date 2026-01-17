@@ -577,3 +577,84 @@ html[data-theme="dark"] .glow-refresh.pulse::after {
 html[data-theme="dark"] .cursor-glow {
   background: radial-gradient(circle, rgba(56,189,248,0.18), transparent 60%);
 }
+/* ================= MOBILE OPTIMIZATION ================= */
+
+/* Touch-friendly buttons */
+button,
+.filter-btn {
+  min-height: 42px;
+  min-width: 42px;
+}
+
+/* Reduce padding on small screens */
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .hero {
+    padding: 4rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post img {
+    height: 110px; /* smaller blog/news images */
+  }
+
+  .tv-block {
+    margin-bottom: 0.8rem;
+  }
+
+  .tv-title {
+    font-size: 0.75rem;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 1.5rem;
+  }
+}
+/* Extra-small phones */
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+
+  .filter-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.8rem;
+  }
+}
+/* Prevent overflow from widgets */
+iframe {
+  max-width: 100%;
+}
