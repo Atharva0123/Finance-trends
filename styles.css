@@ -561,7 +561,6 @@ html[data-theme="dark"] .glow-refresh.pulse::after {
 .bb-item.bullish .bb-dot { background: #16a34a; }
 .bb-item.bearish .bb-dot { background: #dc2626; }
 /* ================= CURSOR GLOW ================= */
-
 .cursor-glow {
   position: fixed;
   width: 280px;
@@ -578,14 +577,12 @@ html[data-theme="dark"] .cursor-glow {
   background: radial-gradient(circle, rgba(56,189,248,0.18), transparent 60%);
 }
 /* ================= MOBILE OPTIMIZATION ================= */
-
 /* Touch-friendly buttons */
 button,
 .filter-btn {
   min-height: 42px;
   min-width: 42px;
 }
-
 /* Reduce padding on small screens */
 @media (max-width: 768px) {
 
@@ -657,4 +654,10 @@ button,
 /* Prevent overflow from widgets */
 iframe {
   max-width: 100%;
+}
+.bb-updated {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
 }
