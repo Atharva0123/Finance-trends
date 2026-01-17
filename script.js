@@ -221,19 +221,20 @@ let blogs = JSON.parse(localStorage.getItem(BLOG_KEY)) || [
 localStorage.setItem(BLOG_KEY, JSON.stringify(blogs));
 
 function renderBlogs() {
-  if (!blogsContainer) return;
-
   blogsContainer.innerHTML = blogs.map(b => `
-    <article class="post reveal" data-category="community">
-      <div class="post-content">
-        <span class="badge market">Community</span>
-        <h3>${b.title}</h3>
-        <p>${b.content}</p>
+    <article class="community-post reveal">
+      <div class="community-meta">
+        <span class="community-tag">COMMUNITY INSIGHT</span>
+        <span class="sentiment bullish">User</span>
       </div>
+      <h3>${b.title}</h3>
+      <p>${b.content}</p>
     </article>
   `).join("");
 
-  observeReveals();
+  document
+    .querySelectorAll(".community-post.reveal")
+    .forEach(el => revealObserver.observe(el));
 }
 
 if (publishBtn) {
@@ -277,3 +278,4 @@ filterButtons.forEach(btn => {
 ===================================================== */
 renderInsights();
 renderBlogs();
+
