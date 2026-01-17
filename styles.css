@@ -850,5 +850,69 @@ html[data-theme="dark"] .community-compose textarea {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(37,99,235,0.45);
 }
+/* ================= COMMUNITY POSTS ================= */
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+  gap: 1.4rem;
+}
+
+.community-post {
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 1.2rem 1.3rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.community-post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(56,189,248,0.12),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.community-post:hover::before {
+  opacity: 1;
+}
+
+.community-post:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.2);
+}
+
+.community-post h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.community-post p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.community-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.community-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
 
 
