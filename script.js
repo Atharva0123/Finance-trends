@@ -57,10 +57,11 @@ function observeReveals() {
     .forEach(el => revealObserver.observe(el));
 }
 /* ===============================
-   BLOOMBERG-STYLE CURATED NEWS
+   BLOOMBERG-STYLE GLOBAL BRIEF
+   (ROTATES ON EVERY REFRESH)
 ================================ */
 
-const BLOOMBERG_NEWS = [
+const BLOOMBERG_POOL = [
   {
     title: "Global Markets Steady as Investors Await Central Bank Signals",
     source: "Global Macro Desk",
@@ -85,22 +86,56 @@ const BLOOMBERG_NEWS = [
     title: "Energy Markets Watch Middle-East Supply Risks Closely",
     source: "Energy Markets",
     sentiment: "neutral"
+  },
+  {
+    title: "Bond Yields Stabilize as Recession Fears Ease Slightly",
+    source: "Rates & Credit",
+    sentiment: "bullish"
+  },
+  {
+    title: "Emerging Markets See Capital Inflows After Dollar Softens",
+    source: "FX & Macro",
+    sentiment: "bullish"
+  },
+  {
+    title: "Equity Volatility Persists as Earnings Season Approaches",
+    source: "Equities",
+    sentiment: "neutral"
+  },
+  {
+    title: "Digital Payments Expand Rapidly Across Southeast Asia",
+    source: "FinTech",
+    sentiment: "bullish"
   }
 ];
 
-const bbContainer = document.getElementById("bb-news");
-
-if (bbContainer) {
-  bbContainer.innerHTML = BLOOMBERG_NEWS.map(n => `
-    <div class="bb-item ${n.sentiment}">
-      <span class="bb-dot"></span>
-      <div>
-        <h4>${n.title}</h4>
-        <small>${n.source}</small>
-      </div>
-    </div>
-  `).join("");
+/* Shuffle utility */
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
+
+function renderBloombergBrief() {
+  const container = document.getElementById("bb-news");
+  if (!container) return;
+
+  const latest = shuffle(BLOOMBERG_POOL).slice(0, 5);
+  const timestamp = new Date().toLocaleTimeString();
+
+  container.innerHTML = `
+    <div class="bb-updated">Last updated: ${timestamp}</div>
+    ${latest.map(n => `
+      <div class="bb-item ${n.sentiment}">
+        <span class="bb-dot"></span>
+        <div>
+          <h4>${n.title}</h4>
+          <small>${n.source}</small>
+        </div>
+      </div>
+    `).join("")}
+  `;
+}
+
+renderBloombergBrief();
 
 /* =====================================================
    CURATED INSIGHTS (STATIC – NO API)
@@ -242,5 +277,3 @@ filterButtons.forEach(btn => {
 ===================================================== */
 renderInsights();
 renderBlogs();
-
-
