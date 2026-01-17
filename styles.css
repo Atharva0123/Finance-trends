@@ -390,87 +390,44 @@ header {
   background: var(--accent);
   color: white;
 }
-/* ================= GOLD PRICE WIDGET ================= */
+/* ================= TRADINGVIEW MINI WIDGETS ================= */
 
-.gold-widget h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-/* Responsive frame */
-.gold-frame {
-  position: relative;
-  width: 100%;
-  margin-top: 0.8rem;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px;
+.tv-mini {
+  margin-bottom: 1rem;
+  border-radius: 14px;
   overflow: hidden;
-  background: #000;
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+  position: relative;
 }
 
-/* Gold glow (LIGHT MODE) */
-.gold-frame::before {
+/* Glow border */
+.tv-mini::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 215, 0, 0.6);
-  box-shadow:
-    0 0 18px rgba(255,215,0,0.35),
-    inset 0 0 14px rgba(255,215,0,0.25);
-  animation: goldPulse 4s ease-in-out infinite;
+  border-radius: 14px;
   pointer-events: none;
-  z-index: 2;
+  border: 1px solid rgba(255,215,0,0.35);
+  box-shadow: 0 0 18px rgba(255,215,0,0.25);
+  animation: pulseGlow 4s ease-in-out infinite;
 }
 
-/* DARK MODE – COOLER GOLD / CYAN BLEND */
-html[data-theme="dark"] .gold-frame::before {
-  border-color: rgba(56,189,248,0.6);
-  box-shadow:
-    0 0 22px rgba(56,189,248,0.45),
-    inset 0 0 16px rgba(56,189,248,0.3);
+html[data-theme="dark"] .tv-mini::before {
+  border-color: rgba(56,189,248,0.45);
+  box-shadow: 0 0 22px rgba(56,189,248,0.35);
 }
 
-/* Pulse animation */
-@keyframes goldPulse {
-  0%,100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
+@keyframes pulseGlow {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
-/* iframe */
-.gold-frame iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: black;
-}
-
-/* Source */
-.gold-source {
-  margin-top: 0.6rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.gold-source a {
-  color: #facc15;
-  text-decoration: none;
-}
-
-html[data-theme="dark"] .gold-source a {
-  color: #38bdf8;
-}
-
-/* Mobile tweak */
-@media (max-width: 900px) {
-  .gold-frame {
-    aspect-ratio: 16 / 10;
-  }
+/* Heatmap container */
+#tv-heatmap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 /* ================= SCROLL REVEAL ================= */
@@ -493,4 +450,5 @@ footer {
   color: white;
   font-size: 0.9rem;
 }
+
 
