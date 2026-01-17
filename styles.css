@@ -391,6 +391,74 @@ header {
   color: white;
 }
 
+/* ================= GOLD PRICE WIDGET ================= */
+
+.gold-widget {
+  position: relative;
+}
+
+.gold-widget h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Frame */
+.gold-frame {
+  position: relative;
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 18px 40px rgba(255, 215, 0, 0.25);
+}
+
+/* Glow border */
+.gold-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255,215,0,0.45);
+  pointer-events: none;
+  animation: goldGlow 4s ease-in-out infinite;
+}
+
+@keyframes goldGlow {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* iframe */
+.gold-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: black;
+}
+
+/* Source text */
+.gold-source {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.gold-source a {
+  color: #facc15;
+  text-decoration: none;
+}
+
+/* Mobile optimization */
+@media (max-width: 900px) {
+  .gold-frame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
 /* ================= SCROLL REVEAL ================= */
 .reveal {
   opacity: 0;
@@ -411,5 +479,3 @@ footer {
   color: white;
   font-size: 0.9rem;
 }
-
-
