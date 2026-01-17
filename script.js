@@ -27,6 +27,14 @@ if (darkToggle) {
     localStorage.setItem("theme", next);
   };
 }
+/* ===============================
+   CURSOR GLOW FOLLOW
+================================ */
+const cursor = document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove", e => {
+  cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
 
 /* =====================================================
    SCROLL REVEAL (REAL – FIXED)
@@ -234,4 +242,5 @@ filterButtons.forEach(btn => {
 ===================================================== */
 renderInsights();
 renderBlogs();
+
 
