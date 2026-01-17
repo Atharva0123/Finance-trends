@@ -106,13 +106,37 @@
 
   </main>
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar reveal">
-    <div class="widget glass">
-      <h3>Market Snapshot</h3>
-      <div id="market-snapshot"></div>
+<aside class="sidebar reveal">
+
+  <!-- MARKET SNAPSHOT -->
+  <div class="widget">
+    <h3>📊 Market Snapshot</h3>
+    <div id="market-snapshot"></div>
+  </div>
+
+  <!-- GOLD PRICE CHART -->
+  <div class="widget gold-widget">
+    <h3>🟡 Live Gold Price</h3>
+
+    <div class="gold-frame">
+      <iframe
+        src="https://goldprice.org/charts/gold_1d_o_usd_x.png"
+        title="Gold Price Chart"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </div>
-  </aside>
+
+    <p class="gold-source">
+      Source:
+      <a href="https://goldprice.org/" target="_blank" rel="noopener">
+        GoldPrice.org
+      </a>
+    </p>
+  </div>
+
+</aside>
+
 
 </section>
 
@@ -127,5 +151,6 @@
 
 </body>
 </html>
+
 
 
