@@ -48,6 +48,51 @@ function observeReveals() {
     .querySelectorAll(".reveal:not(.active)")
     .forEach(el => revealObserver.observe(el));
 }
+/* ===============================
+   BLOOMBERG-STYLE CURATED NEWS
+================================ */
+
+const BLOOMBERG_NEWS = [
+  {
+    title: "Global Markets Steady as Investors Await Central Bank Signals",
+    source: "Global Macro Desk",
+    sentiment: "neutral"
+  },
+  {
+    title: "AI Spending Cycle Accelerates Across US and Asian Tech Giants",
+    source: "Technology & AI",
+    sentiment: "bullish"
+  },
+  {
+    title: "Gold Holds Firm as Inflation Hedges Regain Attention",
+    source: "Commodities",
+    sentiment: "bullish"
+  },
+  {
+    title: "FinTech Firms Face Regulatory Tightening Across Europe",
+    source: "Financial Regulation",
+    sentiment: "bearish"
+  },
+  {
+    title: "Energy Markets Watch Middle-East Supply Risks Closely",
+    source: "Energy Markets",
+    sentiment: "neutral"
+  }
+];
+
+const bbContainer = document.getElementById("bb-news");
+
+if (bbContainer) {
+  bbContainer.innerHTML = BLOOMBERG_NEWS.map(n => `
+    <div class="bb-item ${n.sentiment}">
+      <span class="bb-dot"></span>
+      <div>
+        <h4>${n.title}</h4>
+        <small>${n.source}</small>
+      </div>
+    </div>
+  `).join("");
+}
 
 /* =====================================================
    CURATED INSIGHTS (STATIC – NO API)
@@ -189,3 +234,4 @@ filterButtons.forEach(btn => {
 ===================================================== */
 renderInsights();
 renderBlogs();
+
