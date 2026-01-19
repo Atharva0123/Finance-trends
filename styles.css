@@ -72,7 +72,7 @@ body::before {
     linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: gridMove 40s linear infinite;
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 /* GLOW PULSE OVERLAY */
@@ -909,3 +909,4 @@ html[data-theme="dark"] .community-compose textarea {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(37,99,235,0.45);
 }
+
