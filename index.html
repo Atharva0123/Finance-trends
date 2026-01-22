@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Analytics -->
+
+  <!-- ================= GOOGLE ANALYTICS ================= -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF91YVYB3V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -10,13 +11,51 @@
     gtag('config', 'G-VF91YVYB3V');
   </script>
 
+  <!-- ================= BASIC SEO ================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="AI, Quantum, Markets, FinTech & Global Finance insights">
-  <title>Global Finance & Tech Trends</title>
 
+  <title>Global Finance, AI & Market Intelligence | TrendsFinance</title>
+
+  <meta name="description" content="Latest insights on AI, Quantum Computing, Stock Markets, FinTech, Precious Metals and Global Finance. Live market data, community research and economic indicators." />
+
+  <meta name="keywords" content="
+    AI in finance,
+    quantum computing finance,
+    stock market analysis,
+    fintech trends,
+    global finance news,
+    gold price today,
+    silver price today,
+    bitcoin price live,
+    crude oil price,
+    economic indicators,
+    world debt clock,
+    market intelligence,
+    investment research,
+    emerging technologies,
+    financial analytics
+  " />
+
+  <meta name="author" content="Atharva Khobrekar" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- ================= OPEN GRAPH (SOCIAL PREVIEW) ================= -->
+  <meta property="og:title" content="Global Finance & Emerging Technology Insights" />
+  <meta property="og:description" content="AI, Quantum, Markets, FinTech & Precious Metals — Live insights and market intelligence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOUR_GITHUB_PAGES_URL_HERE" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1559526324-593bc073d938" />
+
+  <!-- ================= TWITTER CARD ================= -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Global Finance & Emerging Technology Insights" />
+  <meta name="twitter:description" content="AI, Quantum, Markets, FinTech & Precious Metals — Live market intelligence." />
+
+  <!-- ================= FONTS & STYLES ================= -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
@@ -33,30 +72,35 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero reveal">
+
   <div class="hero-glass">
     <div class="grid-bg"></div>
-    <h1>Global Finance & Emerging Technology</h1>
-    <p>AI • Quantum • Markets • FinTech • Precious Metals</p>
 
-    <!-- ✅ Navigate to Latest Insights -->
-    <a href="#latest-insights">
-      <button class="cta">Explore Insights</button>
-    </a>
+    <!-- H1 FOR SEO -->
+    <h1>Global Finance & Emerging Technology Insights</h1>
 
+    <p>
+      AI • Quantum Computing • Stock Markets • FinTech • Precious Metals • Global Economy
+    </p>
+
+    <button class="cta" onclick="document.getElementById('latest-insights').scrollIntoView({behavior:'smooth'})">
+      Explore Insights
+    </button>
   </div>
+
   <div class="hero-glow"></div>
+
 </section>
 
+<!-- ================= GLOBAL DEBT ================= -->
 <section class="debt-ribbon reveal">
-  <h2>
-    🌍 Global Debt
-    <span class="live-pill breaking">LIVE</span>
-  </h2>
 
-  <div class="debt-frame">
+  <h2>🌍 Global Debt — Live World Debt Clock</h2>
+
+  <div class="debt-frame tall">
     <iframe
       src="https://www.usdebtclock.org/world-debt-clock.html"
-      title="World Debt Clock"
+      title="World Debt Clock Live"
       loading="lazy"
       scrolling="no"
       referrerpolicy="no-referrer"
@@ -69,103 +113,95 @@
       US Debt Clock
     </a>
   </p>
+
 </section>
 
 <!-- ================= MAIN CONTENT ================= -->
 <section class="container">
 
-  <!-- ===== PRIMARY CONTENT ===== -->
+  <!-- ================= PRIMARY ================= -->
   <main>
 
     <!-- ================= LATEST INSIGHTS ================= -->
     <section class="insights-section" id="latest-insights">
-      <div class="section-header">
-        <h2>Latest Insights</h2>
 
-        <!-- ✅ Breaking Pulse -->
-        <span class="live-indicator breaking">
-          <span class="pulse-dot"></span> LIVE
-        </span>
+      <div class="section-header">
+        <h2>Latest Market & Technology Insights</h2>
+        <span class="live-indicator breaking">● Live</span>
       </div>
 
       <!-- FILTERS -->
       <div class="filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="ai">AI & Quantum</button>
-        <button class="filter-btn" data-filter="market">Markets</button>
+        <button class="filter-btn" data-filter="market">Stock Markets</button>
         <button class="filter-btn" data-filter="fintech">FinTech</button>
         <button class="filter-btn" data-filter="gold">Precious Metals</button>
       </div>
 
       <!-- INSIGHTS GRID -->
       <div id="news-container" class="posts-grid"></div>
+
     </section>
 
-    <!-- ================= BLOOMBERG ================= -->
+    <!-- ================= BLOOMBERG STYLE ================= -->
     <section class="bloomberg reveal">
+
       <div class="section-header">
         <h2>Bloomberg-Style Global Brief</h2>
-        <span class="live-pill breaking">LIVE</span>
+        <span class="bb-tag">MARKET INTELLIGENCE</span>
       </div>
 
       <div class="bb-list" id="bb-news"></div>
+
     </section>
 
-<section class="community-section reveal" id="community">
+    <!-- ================= COMMUNITY ================= -->
+    <section class="community-section reveal" id="community">
 
-  <!-- HEADER -->
-  <div class="community-header">
-    <div>
-      <h2>Community Insights</h2>
-      <p class="community-sub">
-        Analyst notes, independent research & market perspectives from readers
-      </p>
-    </div>
-    <span class="community-pill">COMMUNITY</span>
-  </div>
+      <div class="community-header">
+        <div>
+          <h2>Community Insights</h2>
+          <p class="community-sub">
+            Analyst notes, independent research & market perspectives from readers
+          </p>
+        </div>
+        <span class="community-pill">COMMUNITY</span>
+      </div>
 
-  <!-- COMPOSE CARD -->
-  <div class="community-compose">
-    <div class="compose-title">
-      <span class="compose-icon">✍</span>
-      <h3>Share an Insight</h3>
-    </div>
+      <div class="community-compose">
+        <div class="compose-title">
+          <span class="compose-icon">✍</span>
+          <h3>Share an Insight</h3>
+        </div>
 
-    <div class="compose-fields">
-      <input
-        id="blog-title"
-        placeholder="Insight title (e.g. AI valuations entering bubble territory)"
-      />
+        <div class="compose-fields">
+          <input id="blog-title" placeholder="Insight title (e.g. AI valuations entering bubble territory)" />
+          <textarea id="blog-content" rows="4" placeholder="Write your analysis, observation or thesis…"></textarea>
+        </div>
 
-      <textarea
-        id="blog-content"
-        rows="4"
-        placeholder="Write your analysis, observation or thesis…"
-      ></textarea>
-    </div>
+        <div class="compose-footer">
+          <span class="compose-note">Visible to all users</span>
+          <button id="publishBtn">Publish Insight</button>
+        </div>
+      </div>
 
-    <div class="compose-footer">
-      <span class="compose-note">Visible to all users</span>
-      <button id="publishBtn">Publish Insight</button>
-    </div>
-  </div>
+      <div id="blogs-container" class="community-grid"></div>
 
-  <!-- POSTS GRID -->
-  <div id="blogs-container" class="community-grid"></div>
-
-</section>
-
+    </section>
 
   </main>
 
   <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar reveal">
 
+    <!-- MARKET SNAPSHOT -->
     <div class="widget">
-      <h3>📊 Market Snapshot <span class="live-pill breaking">LIVE</span></h3>
+      <h3>📊 Market Snapshot</h3>
       <div id="market-snapshot"></div>
     </div>
 
+    <!-- TRADINGVIEW BLOCKS -->
     <div class="widget reveal">
       <h3>Markets Overview</h3>
 
@@ -191,28 +227,58 @@
     </div>
 
     <div class="widget reveal">
-      <h3>
-        🌍 Economic Indicators
-        <span class="live-pill breaking">LIVE</span>
-      </h3>
+      <h3>🌍 Economic Indicators Heatmap</h3>
       <div id="tv-heatmap" class="glow-refresh"></div>
     </div>
 
   </aside>
+
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- ================= SEO FOOTER LINKS ================= -->
 <footer>
-  <p>© 2026 Global Finance & Tech Trends</p>
+
+  <div class="footer-links">
+
+    <div class="footer-col">
+      <h4>About & Contact</h4>
+      <a href="https://atharvakhobrekar.netlify.app/" target="_blank" rel="noopener">
+        Portfolio & Contact — Atharva Khobrekar
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Finance Tools</h4>
+      <a href="https://sipemicalculator.vercel.app/" target="_blank" rel="noopener">
+        SIP & EMI Calculator
+      </a>
+      <a href="https://finflowsipemistudio.vercel.app/" target="_blank" rel="noopener">
+        SIP & EMI Studio (Advanced)
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Topics</h4>
+      <span>AI in Finance</span>
+      <span>Quantum Computing</span>
+      <span>Stock Market Analysis</span>
+      <span>FinTech Innovation</span>
+      <span>Gold & Commodities</span>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">
+    © 2026 Global Finance & Tech Trends — Market Intelligence & Emerging Technologies
+  </p>
+
 </footer>
 
 <!-- ================= SCRIPTS ================= -->
 <script src="script.js"></script>
 <script src="chart.js"></script>
+
 <div class="cursor-glow"></div>
 
 </body>
 </html>
-
-
-
