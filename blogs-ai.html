@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title id="page-title">Finance Blog</title>
-
-<meta name="description" content="Finance blog covering Jio Finance, Bajaj Finance, small finance banks, SIP and EMI planning.">
-
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Finance & Market Blogs | TrendsFinance</title>
+  <meta name="description" content="In-depth finance, stock market and fintech blogs covering Indian markets and global trends.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 <header class="navbar">
   <div class="logo">Trends<span>Finance</span></div>
-  <a href="index.html">← Back</a>
+  <a href="index.html">← Back to Home</a>
 </header>
 
-<section class="container">
-  <main>
-    <article id="blog-content" class="post"></article>
-  </main>
-</section>
+<main class="container">
+  <article id="full-blog"></article>
+</main>
 
 <script src="blogs.js"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("post");
 
-  const blog = getBlogBySlug(slug);
+  const blog = ALL_BLOGS.find(b => b.slug === slug);
 
-  if (blog) {
-    document.getElementById("page-title").innerText = blog.title;
-    document.getElementById("blog-content").innerHTML = `
-      <h1>${blog.title}</h1>
-      ${blog.content}
-    `;
-  } else {
-    document.getElementById("blog-content").innerHTML =
-      "<h2>Blog not found</h2><p>The requested article does not exist.</p>";
-  }
+  document.getElementById("full-blog").innerHTML = blog
+    ? blog.content
+    : "<p>Blog not found.</p>";
 </script>
 
 </body>
