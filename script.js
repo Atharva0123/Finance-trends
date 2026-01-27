@@ -199,6 +199,50 @@ function renderInsights() {
 
   observeReveals();
 }
+/* =====================================================
+   SEO BLOG CARDS (FROM blogs.js)
+===================================================== */
+function renderSEOBlogs() {
+  if (!seoBlogsContainer || typeof ALL_BLOGS === "undefined") return;
+
+  seoBlogsContainer.innerHTML = ALL_BLOGS.map(b => `
+    <article class="post reveal" data-category="finance">
+      <div class="post-content">
+        <span class="badge finance">FINANCE</span>
+        <h3>${b.title}</h3>
+        <p>${b.meta}</p>
+        <a href="?blog=${b.slug}" class="cta-link">Read Full Article →</a>
+      </div>
+    </article>
+  `).join("");
+
+  observeReveals();
+}
+
+/* =====================================================
+   FULL PAGE BLOG ROUTING (SEO)
+===================================================== */
+function loadFullBlog() {
+  const slug = new URLSearchParams(window.location.search).get("blog");
+  if (!slug || typeof getBlogBySlug !== "function") return;
+
+  const blog = getBlogBySlug(slug);
+  if (!blog) return;
+
+  document.title = blog.title;
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.setAttribute("content", blog.meta);
+
+  document.body.innerHTML = `
+    <main class="container blog-page">
+      <article class="blog-full">
+        <h1>${blog.title}</h1>
+        ${blog.content}
+        <a href="index.html" class="cta-link">← Back to Home</a>
+      </article>
+    </main>
+  `;
+}
 
 /* =====================================================
    COMMUNITY BLOGS (SAFE)
@@ -278,4 +322,6 @@ filterButtons.forEach(btn => {
 ===================================================== */
 renderInsights();
 renderBlogs();
+loadFullBlog();
+renderSEOBlogs();
 
