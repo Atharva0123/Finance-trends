@@ -1,60 +1,115 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const REFRESH_INTERVAL = 180000; // 3 minutes
 
-  function theme() {
-    return document.documentElement.getAttribute("data-theme") === "dark"
-      ? "dark"
-      : "light";
+  function loadTradingViewWidget(containerId, config) {
+    const container = document.getElementById(containerId);
+    if (!container) return; // 🔐 prevents parentNode crash
+
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.async = true;
+    script.innerHTML = JSON.stringify(config);
+
+    container.innerHTML = ""; // clean mount
+    container.appendChild(script);
   }
 
-  function loadMiniChart(containerId, symbol) {
-    new TradingView.widget({
-      container_id: containerId,
-      width: "100%",
-      height: 180,
-      symbol,
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: theme(),
-      style: "3",
-      locale: "en",
-      hide_top_toolbar: true,
-      hide_legend: true,
-      allow_symbol_change: false,
-      enable_publishing: false,
-      save_image: false
-    });
-  }
-  function loadAllCharts() {
-    document.querySelectorAll(".glow-refresh").forEach(el => {
-      el.classList.remove("pulse");
-      void el.offsetWidth; // reflow
-      el.classList.add("pulse");
-    });
+  function loadHeatmap(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-    loadMiniChart("tv-gold", "TVC:GOLD");
-    loadMiniChart("tv-silver", "TVC:SILVER");
-    loadMiniChart("tv-bitcoin", "BINANCE:BTCUSDT");
-    loadMiniChart("tv-crude", "TVC:USOIL");
-
-    new TradingView.widget({
-      container_id: "tv-heatmap",
-      width: "100%",
-      height: 280,
-      dataSource: "ECONOMICS",
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      exchange: "US",
+      dataSource: "SP500",
+      grouping: "sector",
       blockSize: "market_cap_basic",
       blockColor: "change",
       locale: "en",
-      colorTheme: theme()
+      colorTheme: document.documentElement.dataset.theme === "dark" ? "dark" : "light",
+      hasTopBar: false,
+      isDataSetEnabled: false,
+      width: "100%",
+      height: "400"
     });
+
+    container.innerHTML = "";
+    container.appendChild(script);
   }
 
-  const tvScript = document.createElement("script");
-  tvScript.src = "https://s3.tradingview.com/tv.js";
-  tvScript.onload = () => {
-    loadAllCharts();
-    setInterval(loadAllCharts, REFRESH_INTERVAL);
-  };
+  // ================= MARKET SNAPSHOT =================
+  const snapshot = document.getElementById("market-snapshot");
+  if (snapshot) {
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      width: "100%",
+      height: 380,
+      symbolsGroups: [
+        {
+          name: "Indices",
+          symbols: [
+            { name: "BSE:SENSEX", displayName: "Sensex" },
+            { name: "NSE:NIFTY", displayName: "Nifty 50" },
+            { name: "NASDAQ:NDX", displayName: "NASDAQ 100" }
+          ]
+        },
+        {
+          name: "Commodities",
+          symbols: [
+            { name: "TVC:GOLD", displayName: "Gold" },
+            { name: "TVC:SILVER", displayName: "Silver" },
+            { name: "TVC:USOIL", displayName: "Crude Oil" }
+          ]
+        }
+      ],
+      showSymbolLogo: true,
+      colorTheme: document.documentElement.dataset.theme === "dark" ? "dark" : "light",
+      locale: "en"
+    });
 
-  document.body.appendChild(tvScript);
+    snapshot.appendChild(script);
+  }
+
+  // ================= INDIVIDUAL CHARTS =================
+  loadTradingViewWidget("tv-gold", {
+    symbol: "TVC:GOLD",
+    interval: "60",
+    autosize: true,
+    theme: "dark",
+    style: "1",
+    locale: "en"
+  });
+
+  loadTradingViewWidget("tv-silver", {
+    symbol: "TVC:SILVER",
+    interval: "60",
+    autosize: true,
+    theme: "dark",
+    style: "1",
+    locale: "en"
+  });
+
+  loadTradingViewWidget("tv-bitcoin", {
+    symbol: "BINANCE:BTCUSDT",
+    interval: "60",
+    autosize: true,
+    theme: "dark",
+    style: "1",
+    locale: "en"
+  });
+
+  loadTradingViewWidget("tv-crude", {
+    symbol: "TVC:USOIL",
+    interval: "60",
+    autosize: true,
+    theme: "dark",
+    style: "1",
+    locale: "en"
+  });
+
+  loadHeatmap("tv-heatmap");
+
 });
