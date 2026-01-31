@@ -1,122 +1,127 @@
-/* =====================================================
-   SAFE DOM HELPERS
-===================================================== */
-const $ = id => document.getElementById(id);
-const $$ = q => document.querySelectorAll(q);
+/* =========================================================
+   GLOBAL SAFETY GUARDS
+========================================================= */
 
-/* =====================================================
-   THEME TOGGLE
-===================================================== */
-(() => {
-  const toggle = $("dark-mode-toggle");
-  if (!toggle) return;
-
-  const saved = localStorage.getItem("theme");
-  if (saved === "dark") {
-    document.documentElement.dataset.theme = "dark";
-    toggle.textContent = "☀️";
+// Prevent extension async noise
+window.addEventListener("unhandledrejection", event => {
+  const msg = String(event.reason || "");
+  if (msg.includes("message channel closed")) {
+    event.preventDefault();
   }
+});
 
-  toggle.addEventListener("click", () => {
-    const isDark = document.documentElement.dataset.theme === "dark";
-    document.documentElement.dataset.theme = isDark ? "light" : "dark";
-    toggle.textContent = isDark ? "🌙" : "☀️";
-    localStorage.setItem("theme", isDark ? "light" : "dark");
-    window.dispatchEvent(new Event("themeChange"));
-  });
+// Inject favicon dynamically to prevent favicon.ico 404
+(function ensureFavicon() {
+  if (document.querySelector("link[rel~='icon']")) return;
+
+  const link = document.createElement("link");
+  link.rel = "icon";
+  link.type = "image/svg+xml";
+  link.href =
+    "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>";
+  document.head.appendChild(link);
 })();
 
-/* =====================================================
-   CURSOR GLOW (SAFE)
-===================================================== */
-(() => {
-  const glow = document.querySelector(".cursor-glow");
-  if (!glow) return;
+/* =========================================================
+   SAFE DOM REFERENCES
+========================================================= */
 
-  document.addEventListener("mousemove", e => {
-    glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-  });
-})();
+const newsContainer = document.getElementById("news-container");
+const blogsContainer = document.getElementById("blogs-container");
+const publishBtn = document.getElementById("publishBtn");
+const darkToggle = document.getElementById("dark-mode-toggle");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const revealElements = document.querySelectorAll(".reveal");
 
-/* =====================================================
-   SCROLL REVEAL
-===================================================== */
-(() => {
-  const observer = new IntersectionObserver(
+/* =========================================================
+   SCROLL REVEAL (IntersectionObserver)
+========================================================= */
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
     entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add("active");
-          observer.unobserve(e.target);
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          revealObserver.unobserve(entry.target);
         }
       });
     },
     { threshold: 0.15 }
   );
 
-  const observe = () =>
-    $$(".reveal:not(.active)").forEach(el => observer.observe(el));
-
-  window.addEventListener("load", observe);
-})();
-
-/* =====================================================
-   BLOOMBERG STYLE BRIEF
-===================================================== */
-const BLOOMBERG = [
-  { t: "Global Markets Await Fed Signals", s: "Macro", mood: "neutral" },
-  { t: "AI Investment Cycle Accelerates", s: "Tech", mood: "bullish" },
-  { t: "Gold Strengthens on Inflation Hedge", s: "Commodities", mood: "bullish" },
-  { t: "FinTech Faces New Regulation", s: "Policy", mood: "bearish" },
-  { t: "Emerging Markets Attract Capital", s: "FX", mood: "bullish" }
-];
-
-function renderBloomberg() {
-  const box = $("bb-news");
-  if (!box) return;
-
-  const shuffled = [...BLOOMBERG].sort(() => Math.random() - 0.5);
-  box.innerHTML = `
-    <div class="bb-updated">Updated ${new Date().toLocaleTimeString()}</div>
-    ${shuffled.map(n => `
-      <div class="bb-item ${n.mood}">
-        <span class="bb-dot"></span>
-        <div>
-          <h4>${n.t}</h4>
-          <small>${n.s}</small>
-        </div>
-      </div>
-    `).join("")}
-  `;
+  revealElements.forEach(el => revealObserver.observe(el));
 }
 
-/* =====================================================
-   INSIGHTS
-===================================================== */
+/* =========================================================
+   THEME TOGGLE (NULL SAFE)
+========================================================= */
+
+if (darkToggle) {
+  darkToggle.onclick = () => {
+    const theme =
+      document.documentElement.getAttribute("data-theme") === "dark"
+        ? "light"
+        : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+    darkToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    localStorage.setItem("theme", theme);
+  };
+
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    darkToggle.textContent = "☀️";
+  }
+}
+
+/* =========================================================
+   CURATED INSIGHTS (STATIC, NO API)
+========================================================= */
+
 const INSIGHTS = [
   {
-    title: "AI & Quantum Stocks Surge",
-    desc: "Enterprise adoption fuels earnings optimism.",
+    title: "AI Stocks Surge as Enterprises Accelerate Adoption",
+    desc: "Enterprise automation and analytics continue to drive AI-led revenue growth.",
     category: "ai",
     sentiment: "bullish",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
   },
   {
-    title: "Markets Volatile on Global Cues",
-    desc: "Macro uncertainty pressures equities.",
+    title: "Quantum Computing Attracts Long-Term Capital",
+    desc: "Next-gen processors push optimism for future computing dominance.",
+    category: "ai",
+    sentiment: "bullish",
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb"
+  },
+  {
+    title: "Global Markets Balance Growth and Risk",
+    desc: "Investors hedge portfolios amid macroeconomic uncertainty.",
     category: "market",
-    sentiment: "bearish",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3"
+    sentiment: "neutral",
+    image: "https://images.unsplash.com/photo-1549421263-5ec394a5ad6b"
+  },
+  {
+    title: "FinTech Expands Financial Inclusion",
+    desc: "Digital wallets and neobanks accelerate access to banking.",
+    category: "fintech",
+    sentiment: "bullish",
+    image: "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1"
+  },
+  {
+    title: "Gold Strengthens as Safe-Haven Demand Rises",
+    desc: "Precious metals gain amid inflation and currency volatility.",
+    category: "gold",
+    sentiment: "bullish",
+    image: "https://images.unsplash.com/photo-1610375461246-83df859d849d"
   }
 ];
 
 function renderInsights() {
-  const box = $("news-container");
-  if (!box) return;
+  if (!newsContainer) return;
 
-  box.innerHTML = INSIGHTS.map(i => `
+  newsContainer.innerHTML = INSIGHTS.map(i => `
     <article class="post reveal" data-category="${i.category}">
-      <img src="${i.image}" alt="${i.title}">
+      <img src="${i.image}" loading="lazy" alt="${i.title}">
       <div class="post-content">
         <span class="badge ${i.category}">${i.category.toUpperCase()}</span>
         <span class="sentiment ${i.sentiment}">${i.sentiment}</span>
@@ -127,59 +132,80 @@ function renderInsights() {
   `).join("");
 }
 
-/* =====================================================
-   COMMUNITY INSIGHTS
-===================================================== */
-const KEY = "tf_community";
-let posts = JSON.parse(localStorage.getItem(KEY) || "[]");
+/* =========================================================
+   COMMUNITY BLOGS (LOCAL STORAGE)
+========================================================= */
 
-function renderCommunity() {
-  const box = $("blogs-container");
-  if (!box) return;
+const BLOG_KEY = "tf_blogs";
 
-  box.innerHTML = posts.map(p => `
-    <article class="community-post reveal">
-      <h3>${p.title}</h3>
-      <p>${p.content}</p>
+let blogs = [];
+try {
+  blogs = JSON.parse(localStorage.getItem(BLOG_KEY)) || [];
+} catch {
+  blogs = [];
+}
+
+if (blogs.length === 0) {
+  blogs = [
+    {
+      title: "AI and the Future of Investing",
+      content: "AI-driven analytics improve forecasting and risk management."
+    },
+    {
+      title: "FinTech as a Growth Catalyst",
+      content: "Digital finance is reshaping global capital flows."
+    }
+  ];
+  localStorage.setItem(BLOG_KEY, JSON.stringify(blogs));
+}
+
+function renderBlogs() {
+  if (!blogsContainer) return;
+
+  blogsContainer.innerHTML = blogs.map(b => `
+    <article class="post reveal">
+      <div class="post-content">
+        <span class="badge market">Community</span>
+        <h3>${b.title}</h3>
+        <p>${b.content}</p>
+      </div>
     </article>
   `).join("");
 }
 
-(() => {
-  const btn = $("publishBtn");
-  if (!btn) return;
-
-  btn.onclick = () => {
-    const title = $("blog-title")?.value.trim();
-    const content = $("blog-content")?.value.trim();
+if (publishBtn) {
+  publishBtn.onclick = () => {
+    const title = document.getElementById("blog-title")?.value;
+    const content = document.getElementById("blog-content")?.value;
     if (!title || !content) return;
 
-    posts.unshift({ title, content });
-    localStorage.setItem(KEY, JSON.stringify(posts));
-    renderCommunity();
+    blogs.unshift({ title, content });
+    localStorage.setItem(BLOG_KEY, JSON.stringify(blogs));
+    renderBlogs();
   };
-})();
+}
 
-/* =====================================================
-   FILTERING
-===================================================== */
-$$(".filter-btn").forEach(btn => {
-  btn.onclick = () => {
+/* =========================================================
+   FILTERS (NULL SAFE)
+========================================================= */
+
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
     document.querySelector(".filter-btn.active")?.classList.remove("active");
     btn.classList.add("active");
 
-    const f = btn.dataset.filter;
-    $$(".post").forEach(p => {
-      p.classList.toggle("hide", f !== "all" && p.dataset.category !== f);
+    const filter = btn.dataset.filter;
+    document.querySelectorAll(".post").forEach(post => {
+      const match =
+        filter === "all" || post.dataset.category === filter;
+      post.classList.toggle("hide", !match);
     });
-  };
+  });
 });
 
-/* =====================================================
+/* =========================================================
    INIT
-===================================================== */
-window.addEventListener("load", () => {
-  renderBloomberg();
-  renderInsights();
-  renderCommunity();
-});
+========================================================= */
+
+renderInsights();
+renderBlogs();
