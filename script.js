@@ -1,14 +1,15 @@
 /* =====================================================
-   DOM REFERENCES (SAFE)
+   SAFE DOM REFERENCES
 ===================================================== */
 const newsContainer = document.getElementById("news-container");
 const blogsContainer = document.getElementById("blogs-container");
+const seoBlogsContainer = document.getElementById("seo-blogs");
 const publishBtn = document.getElementById("publishBtn");
 const darkToggle = document.getElementById("dark-mode-toggle");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 /* =====================================================
-   THEME (SAFE FOR GITHUB PAGES)
+   THEME TOGGLE (SAFE)
 ===================================================== */
 if (darkToggle) {
   const savedTheme = localStorage.getItem("theme");
@@ -18,26 +19,26 @@ if (darkToggle) {
   }
 
   darkToggle.onclick = () => {
-    const isDark =
-      document.documentElement.getAttribute("data-theme") === "dark";
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     const next = isDark ? "light" : "dark";
-
     document.documentElement.setAttribute("data-theme", next);
     darkToggle.textContent = next === "dark" ? "☀️" : "🌙";
     localStorage.setItem("theme", next);
   };
 }
-/* ===============================
-   CURSOR GLOW FOLLOW
-================================ */
-const cursor = document.querySelector(".cursor-glow");
-
-document.addEventListener("mousemove", e => {
-  cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-});
 
 /* =====================================================
-   SCROLL REVEAL (REAL – FIXED)
+   CURSOR GLOW (SAFE)
+===================================================== */
+const cursor = document.querySelector(".cursor-glow");
+if (cursor) {
+  document.addEventListener("mousemove", e => {
+    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+  });
+}
+
+/* =====================================================
+   SCROLL REVEAL
 ===================================================== */
 const revealObserver = new IntersectionObserver(
   entries => {
@@ -56,125 +57,65 @@ function observeReveals() {
     .querySelectorAll(".reveal:not(.active)")
     .forEach(el => revealObserver.observe(el));
 }
-/* ===============================
-   BLOOMBERG-STYLE GLOBAL BRIEF
-   (ROTATES ON EVERY REFRESH)
-================================ */
 
+/* =====================================================
+   BLOOMBERG STYLE GLOBAL BRIEF
+===================================================== */
 const BLOOMBERG_POOL = [
-  {
-    title: "Global Markets Steady as Investors Await Central Bank Signals",
-    source: "Global Macro Desk",
-    sentiment: "neutral"
-  },
-  {
-    title: "AI Spending Cycle Accelerates Across US and Asian Tech Giants",
-    source: "Technology & AI",
-    sentiment: "bullish"
-  },
-  {
-    title: "Gold Holds Firm as Inflation Hedges Regain Attention",
-    source: "Commodities",
-    sentiment: "bullish"
-  },
-  {
-    title: "FinTech Firms Face Regulatory Tightening Across Europe",
-    source: "Financial Regulation",
-    sentiment: "bearish"
-  },
-  {
-    title: "Energy Markets Watch Middle-East Supply Risks Closely",
-    source: "Energy Markets",
-    sentiment: "neutral"
-  },
-  {
-    title: "Bond Yields Stabilize as Recession Fears Ease Slightly",
-    source: "Rates & Credit",
-    sentiment: "bullish"
-  },
-  {
-    title: "Emerging Markets See Capital Inflows After Dollar Softens",
-    source: "FX & Macro",
-    sentiment: "bullish"
-  },
-  {
-    title: "Equity Volatility Persists as Earnings Season Approaches",
-    source: "Equities",
-    sentiment: "neutral"
-  },
-  {
-    title: "Digital Payments Expand Rapidly Across Southeast Asia",
-    source: "FinTech",
-    sentiment: "bullish"
-  }
+  { title: "Global Markets Steady as Investors Await Central Bank Signals", source: "Macro Desk", sentiment: "neutral" },
+  { title: "AI Spending Cycle Accelerates Across Tech Giants", source: "Technology", sentiment: "bullish" },
+  { title: "Gold Holds Firm as Inflation Hedges Return", source: "Commodities", sentiment: "bullish" },
+  { title: "FinTech Faces Regulatory Tightening in Europe", source: "Regulation", sentiment: "bearish" },
+  { title: "Emerging Markets See Capital Inflows", source: "FX", sentiment: "bullish" }
 ];
 
-/* Shuffle utility */
-function shuffle(array) {
-  return [...array].sort(() => Math.random() - 0.5);
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
 }
 
 function renderBloombergBrief() {
   const container = document.getElementById("bb-news");
   if (!container) return;
 
-  const latest = shuffle(BLOOMBERG_POOL).slice(0, 5);
-  const timestamp = new Date().toLocaleTimeString();
-
+  const items = shuffle(BLOOMBERG_POOL).slice(0, 5);
   container.innerHTML = `
-    <div class="bb-updated">Last updated: ${timestamp}</div>
-    ${latest.map(n => `
-      <div class="bb-item ${n.sentiment}">
+    <div class="bb-updated">Updated: ${new Date().toLocaleTimeString()}</div>
+    ${items.map(i => `
+      <div class="bb-item ${i.sentiment}">
         <span class="bb-dot"></span>
         <div>
-          <h4>${n.title}</h4>
-          <small>${n.source}</small>
+          <h4>${i.title}</h4>
+          <small>${i.source}</small>
         </div>
       </div>
     `).join("")}
   `;
 }
 
-renderBloombergBrief();
-
 /* =====================================================
-   CURATED INSIGHTS (STATIC – NO API)
+   CURATED INSIGHTS
 ===================================================== */
 const INSIGHTS = [
   {
-    title: "AI Stocks Surge as Enterprises Accelerate Adoption",
-    desc: "Artificial intelligence leaders report strong revenue growth driven by enterprise automation.",
+    title: "AI Stocks Surge as Adoption Accelerates",
+    desc: "Enterprise automation boosts AI earnings outlook.",
     category: "ai",
     sentiment: "bullish",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
   },
   {
-    title: "Quantum Computing Breakthroughs Attract Global Investors",
-    desc: "Advances in quantum processors fuel optimism for next-generation computing.",
+    title: "Quantum Computing Attracts Capital",
+    desc: "Breakthroughs fuel long-term optimism.",
     category: "ai",
     sentiment: "bullish",
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb"
   },
   {
-    title: "Sensex and Nifty Face Volatility Amid Global Cues",
-    desc: "Indian markets remain volatile due to global macroeconomic uncertainty.",
+    title: "Markets Volatile Amid Global Cues",
+    desc: "Macro uncertainty weighs on indices.",
     category: "market",
     sentiment: "bearish",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3"
-  },
-  {
-    title: "FinTech Firms Drive Financial Inclusion Worldwide",
-    desc: "Digital wallets and neobanks expand access to banking services.",
-    category: "fintech",
-    sentiment: "bullish",
-    image: "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1"
-  },
-  {
-    title: "Gold Prices Rise as Investors Seek Safe Havens",
-    desc: "Precious metals gain traction amid global uncertainty.",
-    category: "gold",
-    sentiment: "bullish",
-    image: "https://images.unsplash.com/photo-1610375461246-83df859d849d"
   }
 ];
 
@@ -185,12 +126,8 @@ function renderInsights() {
     <article class="post reveal" data-category="${i.category}">
       <img src="${i.image}" alt="${i.title}">
       <div class="post-content">
-        <span class="badge ${i.category}">
-          ${i.category.toUpperCase()}
-        </span>
-        <span class="sentiment ${i.sentiment}">
-          ${i.sentiment}
-        </span>
+        <span class="badge ${i.category}">${i.category.toUpperCase()}</span>
+        <span class="sentiment ${i.sentiment}">${i.sentiment}</span>
         <h3>${i.title}</h3>
         <p>${i.desc}</p>
       </div>
@@ -199,8 +136,9 @@ function renderInsights() {
 
   observeReveals();
 }
+
 /* =====================================================
-   SEO BLOG CARDS (FROM blogs.js)
+   SEO BLOG CARDS
 ===================================================== */
 function renderSEOBlogs() {
   if (!seoBlogsContainer || typeof ALL_BLOGS === "undefined") return;
@@ -211,7 +149,7 @@ function renderSEOBlogs() {
         <span class="badge finance">FINANCE</span>
         <h3>${b.title}</h3>
         <p>${b.meta}</p>
-        <a href="?blog=${b.slug}" class="cta-link">Read Full Article →</a>
+        <a href="?blog=${b.slug}" class="cta-link">Read Full →</a>
       </div>
     </article>
   `).join("");
@@ -220,7 +158,7 @@ function renderSEOBlogs() {
 }
 
 /* =====================================================
-   FULL PAGE BLOG ROUTING (SEO)
+   FULL BLOG ROUTING (SEO SAFE)
 ===================================================== */
 function loadFullBlog() {
   const slug = new URLSearchParams(window.location.search).get("blog");
@@ -238,47 +176,29 @@ function loadFullBlog() {
       <article class="blog-full">
         <h1>${blog.title}</h1>
         ${blog.content}
-        <a href="index.html" class="cta-link">← Back to Home</a>
+        <a href="index.html" class="cta-link">← Back</a>
       </article>
     </main>
   `;
 }
 
 /* =====================================================
-   COMMUNITY BLOGS (SAFE)
+   COMMUNITY INSIGHTS
 ===================================================== */
 const BLOG_KEY = "tf_blogs";
-
-let blogs = JSON.parse(localStorage.getItem(BLOG_KEY)) || [
-  {
-    title: "How AI Is Transforming Long-Term Investing",
-    content:
-      "AI-driven analytics help investors detect trends early and manage risk."
-  },
-  {
-    title: "Why FinTech Is the Backbone of Digital Economies",
-    content:
-      "Digital payments and neobanks accelerate economic inclusion worldwide."
-  }
-];
-
-localStorage.setItem(BLOG_KEY, JSON.stringify(blogs));
+let blogs = JSON.parse(localStorage.getItem(BLOG_KEY)) || [];
 
 function renderBlogs() {
+  if (!blogsContainer) return;
+
   blogsContainer.innerHTML = blogs.map(b => `
     <article class="community-post reveal">
-      <div class="community-meta">
-        <span class="community-tag">COMMUNITY INSIGHT</span>
-        <span class="sentiment bullish">User</span>
-      </div>
       <h3>${b.title}</h3>
       <p>${b.content}</p>
     </article>
   `).join("");
 
-  document
-    .querySelectorAll(".community-post.reveal")
-    .forEach(el => revealObserver.observe(el));
+  observeReveals();
 }
 
 if (publishBtn) {
@@ -294,24 +214,16 @@ if (publishBtn) {
 }
 
 /* =====================================================
-   CATEGORY FILTERING (FIXED)
+   CATEGORY FILTERING (SAFE)
 ===================================================== */
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
-    document
-      .querySelector(".filter-btn.active")
-      ?.classList.remove("active");
+    document.querySelector(".filter-btn.active")?.classList.remove("active");
     btn.classList.add("active");
 
     const filter = btn.dataset.filter;
-
     document.querySelectorAll(".post").forEach(post => {
-      const category = post.dataset.category;
-      const show =
-        filter === "all" ||
-        category === filter ||
-        category === "community";
-
+      const show = filter === "all" || post.dataset.category === filter;
       post.classList.toggle("hide", !show);
     });
   });
@@ -320,8 +232,8 @@ filterButtons.forEach(btn => {
 /* =====================================================
    INIT
 ===================================================== */
+renderBloombergBrief();
 renderInsights();
 renderBlogs();
-loadFullBlog();
 renderSEOBlogs();
-
+loadFullBlog();
