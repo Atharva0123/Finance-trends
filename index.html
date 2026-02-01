@@ -1,59 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-  <link rel="icon" href="/Finance-trends/favicon.ico" type="image/x-icon">
+
+  <!-- ================= BASIC ================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ================= FAVICON (GitHub Pages safe) ================= -->
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+  <!-- ================= SEO ================= -->
+  <title>Finance Trends India | Share Price Analysis, SIP & Market Insights</title>
+
+  <meta name="description" content="Latest finance trends in India covering AI, quantum computing, stock markets, fintech, SIP & EMI planning, commodities and global economy insights.">
+  <meta name="keywords" content="AI in finance, quantum computing finance, stock market analysis, fintech trends, gold price today, silver price today, bitcoin price live, crude oil price, economic indicators, world debt clock, investment research">
+  <meta name="author" content="Atharva Khobrekar">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+  <!-- ================= OPEN GRAPH ================= -->
+  <meta property="og:title" content="Finance Trends India">
+  <meta property="og:description" content="Expert finance blogs on markets, SIP planning, fintech, AI and global economy.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://atharva0123.github.io/Finance-trends/">
+
+  <!-- ================= TWITTER ================= -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Finance Trends India">
+  <meta name="twitter:description" content="Global Finance & Emerging Technology Insights">
+
   <!-- ================= GOOGLE ANALYTICS ================= -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF91YVYB3V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-VF91YVYB3V');
   </script>
 
-  <!-- ================= BASIC SEO ================= -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <title>Finance Trends India | Share Price Analysis, SIP & Market Insights</title>
-
-  <meta name="description" content="Latest finance trends in India covering Jio Finance, Bajaj Finance, small finance banks, SIP and EMI planning, and stock market insights.">
-
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-
-  <meta name="keywords" content="
-    AI in finance,
-    quantum computing finance,
-    stock market analysis,
-    fintech trends,
-    global finance news,
-    gold price today,
-    silver price today,
-    bitcoin price live,
-    crude oil price,
-    economic indicators,
-    world debt clock,
-    market intelligence,
-    investment research,
-    emerging technologies,
-    financial analytics
-  " />
-
-  <meta name="author" content="Atharva Khobrekar" />
-  <meta name="robots" content="index, follow" />
-
-  <!-- ================= OPEN GRAPH (SOCIAL PREVIEW) ================= -->
-  <!-- Open Graph -->
-  <meta property="og:title" content="Finance Trends India">
-  <meta property="og:description" content="Expert finance blogs on share prices, SIP planning and market trends.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://atharva0123.github.io/Finance-trends/">
-
-  <link rel="stylesheet" href="styles.css">
-
-<!-- Schema: Website -->
+  <!-- ================= SCHEMA ================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,11 +50,7 @@
       "name": "Atharva Khobrekar"
     }
   }
-
-  <!-- ================= TWITTER CARD ================= -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Global Finance & Emerging Technology Insights" />
-  <meta name="twitter:description" content="Finance Trends India | Share Price Analysis, SIP & Market Insights" />
+  </script>
 
   <!-- ================= FONTS & STYLES ================= -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -91,29 +72,24 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero reveal">
-
   <div class="hero-glass">
     <div class="grid-bg"></div>
 
-    <!-- H1 FOR SEO -->
     <h1>Finance Trends India | Share Price Analysis, SIP & Market Insights</h1>
 
     <p>
-      AI • Quantum Computing • Stock Markets • FinTech • Precious Metals • Global Economy
+      AI • Quantum Computing • Stock Markets • FinTech • Commodities • Global Economy
     </p>
 
     <button class="cta" onclick="document.getElementById('latest-insights').scrollIntoView({behavior:'smooth'})">
       Explore Insights
     </button>
   </div>
-
   <div class="hero-glow"></div>
-
 </section>
 
 <!-- ================= GLOBAL DEBT ================= -->
 <section class="debt-ribbon reveal">
-
   <h2>🌍 Global Debt — Live World Debt Clock</h2>
 
   <div class="debt-frame tall">
@@ -122,8 +98,8 @@
       title="World Debt Clock Live"
       loading="lazy"
       scrolling="no"
-      referrerpolicy="no-referrer"
-    ></iframe>
+      referrerpolicy="no-referrer">
+    </iframe>
   </div>
 
   <p class="debt-note">
@@ -132,185 +108,125 @@
       US Debt Clock
     </a>
   </p>
-
 </section>
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ================= MAIN ================= -->
 <section class="container">
 
-  <!-- ================= PRIMARY ================= -->
-  <main>
+<main>
 
-    <!-- ================= LATEST INSIGHTS ================= -->
-    <section class="insights-section" id="latest-insights">
-
-      <div class="section-header">
-        <h2>Latest Market & Technology Insights</h2>
-        <span class="live-indicator breaking">● Live</span>
-      </div>
-
-      <!-- FILTERS -->
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="ai">AI & Quantum</button>
-        <button class="filter-btn" data-filter="market">Stock Markets</button>
-        <button class="filter-btn" data-filter="fintech">FinTech</button>
-        <button class="filter-btn" data-filter="gold">Precious Metals</button>
-      </div>
-
-      <!-- INSIGHTS GRID -->
-      <div id="news-container" class="posts-grid"></div>
-
-    <!-- ================= SEO BLOG SECTION ================= -->
-    <section id="seo-blogs" class="insights-section">
-      <h2>Featured Finance Blogs</h2>
-      <div id="seo-blogs-container" class="posts-grid"></div>
-    </section>
-    </section>
-
-    <!-- ================= BLOOMBERG STYLE ================= -->
-    <section class="bloomberg reveal">
-
-      <div class="section-header">
-        <h2>Bloomberg-Style Global Brief</h2>
-        <span class="bb-tag">MARKET INTELLIGENCE</span>
-      </div>
-
-      <div class="bb-list" id="bb-news"></div>
-
-    </section>
-
-    <!-- ================= COMMUNITY ================= -->
-    <section class="community-section reveal" id="community">
-
-      <div class="community-header">
-        <div>
-          <h2>Community Insights</h2>
-          <p class="community-sub">
-            Analyst notes, independent research & market perspectives from readers
-          </p>
-        </div>
-        <span class="community-pill">COMMUNITY</span>
-      </div>
-
-      <div class="community-compose">
-        <div class="compose-title">
-          <span class="compose-icon">✍</span>
-          <h3>Share an Insight</h3>
-        </div>
-
-        <div class="compose-fields">
-          <input id="blog-title" placeholder="Insight title (e.g. AI valuations entering bubble territory)" />
-          <textarea id="blog-content" rows="4" placeholder="Write your analysis, observation or thesis…"></textarea>
-        </div>
-
-        <div class="compose-footer">
-          <span class="compose-note">Visible to all users</span>
-          <button id="publishBtn">Publish Insight</button>
-        </div>
-      </div>
-
-      <div id="blogs-container" class="community-grid"></div>
-
-    </section>
-
-  </main>
-
-  <!-- ================= SIDEBAR ================= -->
-  <aside class="sidebar reveal">
-
-    <!-- MARKET SNAPSHOT -->
-    <div class="widget">
-      <h3>📊 Market Snapshot</h3>
-      <div id="market-snapshot"></div>
+  <!-- ================= INSIGHTS ================= -->
+  <section class="insights-section" id="latest-insights">
+    <div class="section-header">
+      <h2>Latest Market & Technology Insights</h2>
+      <span class="live-indicator breaking">● Live</span>
     </div>
 
-    <!-- TRADINGVIEW BLOCKS -->
-    <div class="widget reveal">
-      <h3>Markets Overview</h3>
-
-      <div class="tv-block glow-refresh">
-        <div class="tv-title">Gold (XAU / USD)</div>
-        <div id="tv-gold"></div>
-      </div>
-
-      <div class="tv-block glow-refresh">
-        <div class="tv-title">Silver (XAG / USD)</div>
-        <div id="tv-silver"></div>
-      </div>
-
-      <div class="tv-block glow-refresh">
-        <div class="tv-title">Bitcoin (BTC / USD)</div>
-        <div id="tv-bitcoin"></div>
-      </div>
-
-      <div class="tv-block glow-refresh">
-        <div class="tv-title">Crude Oil (WTI)</div>
-        <div id="tv-crude"></div>
-      </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ai">AI & Quantum</button>
+      <button class="filter-btn" data-filter="market">Stock Markets</button>
+      <button class="filter-btn" data-filter="fintech">FinTech</button>
+      <button class="filter-btn" data-filter="gold">Precious Metals</button>
     </div>
 
-    <div class="widget reveal">
-      <h3>🌍 Economic Indicators Heatmap</h3>
-      <div id="tv-heatmap" class="glow-refresh"></div>
+    <div id="news-container" class="posts-grid"></div>
+  </section>
+
+  <!-- ================= SEO BLOGS ================= -->
+  <section id="seo-blogs" class="insights-section">
+    <h2>Featured Finance Blogs</h2>
+    <div id="seo-blogs-container" class="posts-grid"></div>
+  </section>
+
+  <!-- ================= BLOOMBERG ================= -->
+  <section class="bloomberg reveal">
+    <div class="section-header">
+      <h2>Bloomberg-Style Global Brief</h2>
+      <span class="bb-tag">MARKET INTELLIGENCE</span>
+    </div>
+    <div id="bb-news" class="bb-list"></div>
+  </section>
+
+  <!-- ================= COMMUNITY ================= -->
+  <section class="community-section reveal" id="community">
+    <div class="community-header">
+      <div>
+        <h2>Community Insights</h2>
+        <p class="community-sub">Analyst notes & independent research</p>
+      </div>
+      <span class="community-pill">COMMUNITY</span>
     </div>
 
-  </aside>
+    <div class="community-compose">
+      <input id="blog-title" placeholder="Insight title">
+      <textarea id="blog-content" rows="4" placeholder="Write your analysis…"></textarea>
+      <button id="publishBtn">Publish Insight</button>
+    </div>
+
+    <div id="blogs-container" class="community-grid"></div>
+  </section>
+
+</main>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar reveal">
+
+  <div class="widget">
+    <h3>📊 Market Snapshot</h3>
+    <div id="market-snapshot"></div>
+  </div>
+
+  <div class="widget">
+    <h3>Markets Overview</h3>
+    <div class="tv-block"><div class="tv-title">Gold (XAU/USD)</div><div id="tv-gold"></div></div>
+    <div class="tv-block"><div class="tv-title">Silver (XAG/USD)</div><div id="tv-silver"></div></div>
+    <div class="tv-block"><div class="tv-title">Bitcoin (BTC/USD)</div><div id="tv-bitcoin"></div></div>
+    <div class="tv-block"><div class="tv-title">Crude Oil (WTI)</div><div id="tv-crude"></div></div>
+  </div>
+
+  <div class="widget">
+    <h3>🌍 Economic Heatmap</h3>
+    <div id="tv-heatmap"></div>
+  </div>
+
+</aside>
 
 </section>
 
-<!-- ================= TRUST ================= -->
-<section class="trust">
-  <p><strong>Disclaimer:</strong> Content is for educational purposes only and not financial advice.</p>
-  <p>Author: Atharva Khobrekar</p>
-</section>
-    
-<!-- ================= SEO FOOTER LINKS ================= -->
+<!-- ================= FOOTER ================= -->
 <footer>
-
   <div class="footer-links">
 
     <div class="footer-col">
-      <h4>About & Contact</h4>
-      <a href="https://atharvakhobrekar.netlify.app/" target="_blank" rel="noopener">
-        Portfolio & Contact — Atharva Khobrekar
-      </a>
+      <h4>About</h4>
+      <a href="https://atharvakhobrekar.netlify.app/" target="_blank" rel="noopener">Portfolio & Contact</a>
     </div>
 
     <div class="footer-col">
-      <h4>Finance Tools</h4>
-      <a href="https://sipemicalculator.vercel.app/" target="_blank" rel="noopener">
-        SIP & EMI Calculator
-      </a>
-      <a href="https://finflowsipemistudio.vercel.app/" target="_blank" rel="noopener">
-        SIP & EMI Studio (Advanced)
-      </a>
+      <h4>Tools</h4>
+      <a href="https://sipemicalculator.vercel.app/" target="_blank" rel="noopener">SIP & EMI Calculator</a>
+      <a href="https://finflowsipemistudio.vercel.app/" target="_blank" rel="noopener">SIP & EMI Studio</a>
     </div>
 
     <div class="footer-col">
       <h4>Topics</h4>
       <span>AI in Finance</span>
       <span>Quantum Computing</span>
-      <span>Stock Market Analysis</span>
-      <span>FinTech Innovation</span>
-      <span>Gold & Commodities</span>
+      <span>Markets</span>
+      <span>FinTech</span>
     </div>
 
   </div>
 
-  <p class="footer-copy">
-    © 2026 Global Finance & Tech Trends — Market Intelligence & Emerging Technologies
-  </p>
-
+  <p class="footer-copy">© 2026 Finance Trends — Market Intelligence</p>
 </footer>
 
 <!-- ================= SCRIPTS ================= -->
-<script src="script.js"></script>
-<script src="chart.js"></script>
+<script defer src="script.js"></script>
+<script defer src="chart.js"></script>
 
 <div class="cursor-glow"></div>
 
 </body>
 </html>
-
-
