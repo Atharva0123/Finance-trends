@@ -1,58 +1,96 @@
-(function () {
-  "use strict";
+/* ===========================
+   TRADINGVIEW SAFE LOADER
+=========================== */
 
-  const SRC = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+const TV_SCRIPT = "https://s3.tradingview.com/tv.js";
 
-  function ensure(id) {
-    let el = document.getElementById(id);
-    if (!el) {
-      el = document.createElement("section");
-      el.id = id;
-      el.style.minHeight = "350px";
-      document.body.appendChild(el);
-    }
-    return el;
+function loadTradingView(cb) {
+  if (window.TradingView) return cb();
+
+  const s = document.createElement("script");
+  s.src = TV_SCRIPT;
+  s.async = true;
+  s.onload = cb;
+  s.onerror = () => console.warn("TradingView failed to load");
+  document.head.appendChild(s);
+}
+
+/* ===========================
+   SAFE WIDGET CREATOR
+=========================== */
+
+function createTVWidget(containerId, config) {
+  const container = document.getElementById(containerId);
+  if (!container || !window.TradingView) {
+    console.warn(`Widget skipped: ${containerId}`);
+    return;
   }
 
-  function widget(id, symbol) {
-    const el = ensure(id);
-    el.innerHTML = "";
+  container.innerHTML = ""; // avoid parentNode errors
 
-    const s = document.createElement("script");
-    s.src = SRC;
-    s.async = true;
-
-    s.innerHTML = JSON.stringify({
-      symbol,
-      interval: "60",
+  try {
+    new TradingView.widget({
+      container_id: containerId,
       autosize: true,
       theme: "dark",
       locale: "en",
-
-      /* 🔒 HARD BLOCK SUPPORT / PUBLISHING */
-      enable_publishing: false,
-      allow_symbol_change: false,
-      save_image: false,
-      calendar: false,
-      details: false,
-      hotlist: false,
-      studies: false,
-      withdateranges: false,
-      show_popup_button: false,
-      hide_side_toolbar: true,
-      hide_top_toolbar: true,
-      hide_legend: true
+      hide_side_toolbar: false,
+      allow_symbol_change: true,
+      ...config
     });
-
-    el.appendChild(s);
+  } catch (e) {
+    container.innerHTML = `<div class="widget-fallback">
+      Chart temporarily unavailable
+    </div>`;
   }
+}
 
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      widget("tv-gold", "TVC:GOLD");
-      widget("tv-silver", "TVC:SILVER");
-      widget("tv-bitcoin", "BINANCE:BTCUSDT");
-      widget("tv-crude", "TVC:USOIL");
-    }, 600);
+/* ===========================
+   ALL CHARTS
+=========================== */
+
+function loadAllCharts() {
+  createTVWidget("chart-xauusd", {
+    symbol: "FX:XAUUSD",
+    interval: "15",
+    studies: ["RSI@tv-basicstudies"]
   });
-})();
+
+  createTVWidget("chart-silver", {
+    symbol: "FX:XAGUSD",
+    interval: "15"
+  });
+
+  createTVWidget("chart-btc", {
+    symbol: "BINANCE:BTCUSDT",
+    interval: "15"
+  });
+
+  createTVWidget("chart-crude", {
+    symbol: "TVC:USOIL",
+    interval: "15"
+  });
+
+  createTVWidget("heatmap-economy", {
+    symbol: "SP:SPX",
+    studies: [],
+  });
+}
+
+/* ===========================
+   INIT
+=========================== */
+
+runWhenReady(() => {
+  const charts = safeGet("charts-section");
+
+  [
+    "chart-xauusd",
+    "chart-silver",
+    "chart-btc",
+    "chart-crude",
+    "heatmap-economy"
+  ].forEach(id => safeGet(id, charts));
+
+  loadTradingView(() => runWhenIdle(loadAllCharts));
+});
