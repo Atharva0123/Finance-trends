@@ -1,89 +1,122 @@
-(() => {
-  function waitForContainer(id, cb, tries = 40) {
-    const el = document.getElementById(id);
-    if (el && el.offsetHeight > 0 && el.parentNode) {
-      cb(el);
-    } else if (tries > 0) {
-      setTimeout(() => waitForContainer(id, cb, tries - 1), 250);
+/* =====================================================
+   TRADINGVIEW SAFE LOADER (HARDENED)
+===================================================== */
+(function () {
+  const TV_SRC = {
+    chart: "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
+    heatmap: "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js",
+    quotes: "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js"
+  };
+
+  function ensureContainer(id, minHeight = 320) {
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement("div");
+      el.id = id;
+      el.style.minHeight = minHeight + "px";
+      document.body.appendChild(el);
     }
+    el.style.minHeight = minHeight + "px";
+    return el;
   }
 
-  function loadWidget(id, src, config) {
-    waitForContainer(id, el => {
-      el.innerHTML = "";
-      const s = document.createElement("script");
-      s.src = src;
-      s.async = true;
-      s.innerHTML = JSON.stringify(config);
-      el.appendChild(s);
-    });
+  function safeLoadWidget(id, config, type = "chart", retries = 3) {
+    const container = ensureContainer(id);
+
+    const ready =
+      container.offsetWidth > 50 &&
+      container.offsetHeight > 50 &&
+      container.isConnected;
+
+    if (!ready) {
+      if (retries > 0) {
+        requestAnimationFrame(() =>
+          safeLoadWidget(id, config, type, retries - 1)
+        );
+      }
+      return;
+    }
+
+    container.innerHTML = "";
+    const script = document.createElement("script");
+    script.src = TV_SRC[type];
+    script.async = true;
+    script.innerHTML = JSON.stringify(config);
+    container.appendChild(script);
   }
 
-  function loadAll() {
+  function loadAllCharts() {
     const theme =
       document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 
-    loadWidget(
+    safeLoadWidget(
       "market-snapshot",
-      "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js",
       {
         width: "100%",
         height: 380,
-        colorTheme: theme,
-        locale: "en",
         symbolsGroups: [
           {
-            name: "Markets",
+            name: "Indices",
             symbols: [
-              { name: "BSE:SENSEX" },
-              { name: "NSE:NIFTY" },
-              { name: "TVC:GOLD" },
-              { name: "BINANCE:BTCUSDT" }
+              { name: "NSE:NIFTY", displayName: "NIFTY 50" },
+              { name: "BSE:SENSEX", displayName: "SENSEX" },
+              { name: "NASDAQ:NDX", displayName: "NASDAQ 100" }
             ]
           }
-        ]
-      }
+        ],
+        showSymbolLogo: true,
+        colorTheme: theme,
+        locale: "en"
+      },
+      "quotes"
     );
 
-    loadWidget("tv-gold",
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
-      { symbol: "TVC:GOLD", autosize: true, theme }
-    );
+    safeLoadWidget("tv-gold", {
+      symbol: "TVC:GOLD",
+      interval: "60",
+      autosize: true,
+      theme
+    });
 
-    loadWidget("tv-silver",
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
-      { symbol: "TVC:SILVER", autosize: true, theme }
-    );
+    safeLoadWidget("tv-silver", {
+      symbol: "TVC:SILVER",
+      interval: "60",
+      autosize: true,
+      theme
+    });
 
-    loadWidget("tv-bitcoin",
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
-      { symbol: "BINANCE:BTCUSDT", autosize: true, theme }
-    );
+    safeLoadWidget("tv-bitcoin", {
+      symbol: "BINANCE:BTCUSDT",
+      interval: "60",
+      autosize: true,
+      theme
+    });
 
-    loadWidget("tv-crude",
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
-      { symbol: "TVC:USOIL", autosize: true, theme }
-    );
+    safeLoadWidget("tv-crude", {
+      symbol: "TVC:USOIL",
+      interval: "60",
+      autosize: true,
+      theme
+    });
 
-    loadWidget(
+    safeLoadWidget(
       "tv-heatmap",
-      "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js",
       {
         exchange: "US",
         dataSource: "SP500",
+        grouping: "sector",
+        blockSize: "market_cap_basic",
         blockColor: "change",
-        colorTheme: theme,
         width: "100%",
-        height: 400
-      }
+        height: 400,
+        colorTheme: theme
+      },
+      "heatmap"
     );
   }
 
+  // 🔒 wait until DOM + layout + fonts are ready
   window.addEventListener("load", () => {
-    setTimeout(loadAll, 600);
-  });
-
-  window.addEventListener("themeChange", () => {
-    setTimeout(loadAll, 400);
+    setTimeout(loadAllCharts, 600);
   });
 })();
