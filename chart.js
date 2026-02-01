@@ -1,96 +1,128 @@
-/* ===========================
-   TRADINGVIEW SAFE LOADER
-=========================== */
+(function () {
+  function safeLoadWidget(containerId, config, widgetType = "chart") {
+    const container = document.getElementById(containerId);
 
-const TV_SCRIPT = "https://s3.tradingview.com/tv.js";
+    // 🔐 Absolute safety checks
+    if (
+      !container ||
+      !container.parentNode ||
+      container.offsetHeight === 0
+    ) {
+      return;
+    }
 
-function loadTradingView(cb) {
-  if (window.TradingView) return cb();
+    const script = document.createElement("script");
 
-  const s = document.createElement("script");
-  s.src = TV_SCRIPT;
-  s.async = true;
-  s.onload = cb;
-  s.onerror = () => console.warn("TradingView failed to load");
-  document.head.appendChild(s);
-}
+    if (widgetType === "heatmap") {
+      script.src =
+        "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
+    } else if (widgetType === "quotes") {
+      script.src =
+        "https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js";
+    } else {
+      script.src =
+        "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    }
 
-/* ===========================
-   SAFE WIDGET CREATOR
-=========================== */
+    script.async = true;
+    script.innerHTML = JSON.stringify(config);
 
-function createTVWidget(containerId, config) {
-  const container = document.getElementById(containerId);
-  if (!container || !window.TradingView) {
-    console.warn(`Widget skipped: ${containerId}`);
-    return;
+    container.innerHTML = "";
+    container.appendChild(script);
   }
 
-  container.innerHTML = ""; // avoid parentNode errors
+  function loadAllCharts() {
+    const theme =
+      document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 
-  try {
-    new TradingView.widget({
-      container_id: containerId,
+    // ===== MARKET SNAPSHOT =====
+    safeLoadWidget(
+      "market-snapshot",
+      {
+        width: "100%",
+        height: 380,
+        symbolsGroups: [
+          {
+            name: "Indices",
+            symbols: [
+              { name: "BSE:SENSEX", displayName: "Sensex" },
+              { name: "NSE:NIFTY", displayName: "Nifty 50" },
+              { name: "NASDAQ:NDX", displayName: "NASDAQ 100" }
+            ]
+          },
+          {
+            name: "Commodities",
+            symbols: [
+              { name: "TVC:GOLD", displayName: "Gold" },
+              { name: "TVC:SILVER", displayName: "Silver" },
+              { name: "TVC:USOIL", displayName: "Crude Oil" }
+            ]
+          }
+        ],
+        showSymbolLogo: true,
+        colorTheme: theme,
+        locale: "en"
+      },
+      "quotes"
+    );
+
+    // ===== INDIVIDUAL CHARTS =====
+    safeLoadWidget("tv-gold", {
+      symbol: "TVC:GOLD",
+      interval: "60",
       autosize: true,
-      theme: "dark",
-      locale: "en",
-      hide_side_toolbar: false,
-      allow_symbol_change: true,
-      ...config
+      theme,
+      style: "1",
+      locale: "en"
     });
-  } catch (e) {
-    container.innerHTML = `<div class="widget-fallback">
-      Chart temporarily unavailable
-    </div>`;
+
+    safeLoadWidget("tv-silver", {
+      symbol: "TVC:SILVER",
+      interval: "60",
+      autosize: true,
+      theme,
+      style: "1",
+      locale: "en"
+    });
+
+    safeLoadWidget("tv-bitcoin", {
+      symbol: "BINANCE:BTCUSDT",
+      interval: "60",
+      autosize: true,
+      theme,
+      style: "1",
+      locale: "en"
+    });
+
+    safeLoadWidget("tv-crude", {
+      symbol: "TVC:USOIL",
+      interval: "60",
+      autosize: true,
+      theme,
+      style: "1",
+      locale: "en"
+    });
+
+    // ===== HEATMAP =====
+    safeLoadWidget(
+      "tv-heatmap",
+      {
+        exchange: "US",
+        dataSource: "SP500",
+        grouping: "sector",
+        blockSize: "market_cap_basic",
+        blockColor: "change",
+        locale: "en",
+        colorTheme: theme,
+        width: "100%",
+        height: 400
+      },
+      "heatmap"
+    );
   }
-}
 
-/* ===========================
-   ALL CHARTS
-=========================== */
-
-function loadAllCharts() {
-  createTVWidget("chart-xauusd", {
-    symbol: "FX:XAUUSD",
-    interval: "15",
-    studies: ["RSI@tv-basicstudies"]
+  // 🔐 CRITICAL: wait until EVERYTHING is painted
+  window.addEventListener("load", () => {
+    setTimeout(loadAllCharts, 300);
   });
-
-  createTVWidget("chart-silver", {
-    symbol: "FX:XAGUSD",
-    interval: "15"
-  });
-
-  createTVWidget("chart-btc", {
-    symbol: "BINANCE:BTCUSDT",
-    interval: "15"
-  });
-
-  createTVWidget("chart-crude", {
-    symbol: "TVC:USOIL",
-    interval: "15"
-  });
-
-  createTVWidget("heatmap-economy", {
-    symbol: "SP:SPX",
-    studies: [],
-  });
-}
-
-/* ===========================
-   INIT
-=========================== */
-
-runWhenReady(() => {
-  const charts = safeGet("charts-section");
-
-  [
-    "chart-xauusd",
-    "chart-silver",
-    "chart-btc",
-    "chart-crude",
-    "heatmap-economy"
-  ].forEach(id => safeGet(id, charts));
-
-  loadTradingView(() => runWhenIdle(loadAllCharts));
-});
+})();
