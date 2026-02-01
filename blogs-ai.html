@@ -3,32 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <title>Finance & Market Blogs | TrendsFinance</title>
-  <meta name="description" content="In-depth finance, stock market and fintech blogs covering Indian markets and global trends.">
+  <meta name="description" content="In-depth finance, stock market, AI in finance, and fintech blogs covering Indian markets and global trends.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- SEO & Social Sharing -->
+  <meta property="og:title" content="Finance & Market Blogs | TrendsFinance">
+  <meta property="og:description" content="Explore latest trends in stock markets, fintech, and AI-driven finance insights.">
+  <meta property="og:image" content="https://yourdomain.com/images/blog-og-image.jpg">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Finance & Market Blogs | TrendsFinance">
+  <meta name="twitter:description" content="Stay updated with AI-driven finance analysis and market trends.">
+  <meta name="twitter:image" content="https://yourdomain.com/images/blog-og-image.jpg">
+
+  <!-- Optional Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
 <header class="navbar">
   <div class="logo">Trends<span>Finance</span></div>
-  <a href="index.html">← Back to Home</a>
+  <nav class="nav-links">
+    <a href="index.html">← Home</a>
+    <a href="blogs.html">All Blogs</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
+<!-- ================= MAIN CONTENT ================= -->
 <main class="container">
-  <article id="full-blog"></article>
+  <section class="blog-section">
+    <div id="full-blog" class="reveal"></div>
+  </section>
+
+  <!-- Related Blogs -->
+  <aside class="related-blogs reveal">
+    <h2>Related Posts</h2>
+    <div id="related-posts" class="posts-grid"></div>
+  </aside>
 </main>
 
+<!-- ================= FOOTER ================= -->
+<footer>
+  &copy; 2026 TrendsFinance. All rights reserved. | <a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
 <script src="blogs.js"></script>
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("post");
+  (function() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("post");
 
-  const blog = ALL_BLOGS.find(b => b.slug === slug);
+      if (!slug) throw new Error("No blog slug provided in URL.");
 
-  document.getElementById("full-blog").innerHTML = blog
-    ? blog.content
-    : "<p>Blog not found.</p>";
+      const blog = ALL_BLOGS.find(b => b.slug === slug);
+
+      const blogContainer = document.getElementById("full-blog");
+      if (!blogContainer) throw new Error("Blog container not found.");
+
+      if (blog) {
+        blogContainer.innerHTML = `
+          <h1>${blog.title}</h1>
+          <p class="blog-meta">Published on ${blog.date} | Category: ${blog.category}</p>
+          <img src="${blog.image}" alt="${blog.title}" class="blog-banner">
+          <div class="blog-content">${blog.content}</div>
+        `;
+
+        // Populate related blogs
+        const relatedContainer = document.getElementById("related-posts");
+        if (relatedContainer) {
+          const related = ALL_BLOGS
+            .filter(b => b.slug !== slug && b.category === blog.category)
+            .slice(0, 4);
+
+          relatedContainer.innerHTML = related.length
+            ? related.map(b => `
+              <div class="post">
+                <img src="${b.image}" alt="${b.title}">
+                <div class="post-content">
+                  <h3>${b.title}</h3>
+                  <p>${b.excerpt}</p>
+                  <a href="blogs-ai.html?post=${b.slug}" class="cta">Read More</a>
+                </div>
+              </div>
+            `).join('')
+            : "<p>No related blogs found.</p>";
+        }
+
+      } else {
+        blogContainer.innerHTML = `
+          <h2>Blog Not Found</h2>
+          <p>Sorry, the blog you are looking for does not exist. Please check other posts <a href="blogs.html">here</a>.</p>
+        `;
+      }
+
+    } catch (error) {
+      console.error("Blog page error:", error);
+      const blogContainer = document.getElementById("full-blog");
+      if (blogContainer) {
+        blogContainer.innerHTML = `
+          <h2>Error Loading Blog</h2>
+          <p>${error.message}</p>
+        `;
+      }
+    }
+  })();
 </script>
 
 </body>
