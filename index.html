@@ -2,34 +2,27 @@
 <html lang="en">
 <head>
 
-  <!-- ================= BASIC ================= -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <!-- ================= FAVICON (GitHub Pages safe) ================= -->
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
-
-  <!-- ================= SEO ================= -->
   <title>Finance Trends India | Share Price Analysis, SIP & Market Insights</title>
-
   <meta name="description" content="Latest finance trends in India covering AI, quantum computing, stock markets, fintech, SIP & EMI planning, commodities and global economy insights.">
   <meta name="keywords" content="AI in finance, quantum computing finance, stock market analysis, fintech trends, gold price today, silver price today, bitcoin price live, crude oil price, economic indicators, world debt clock, investment research">
   <meta name="author" content="Atharva Khobrekar">
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
 
-  <!-- ================= OPEN GRAPH ================= -->
   <meta property="og:title" content="Finance Trends India">
   <meta property="og:description" content="Expert finance blogs on markets, SIP planning, fintech, AI and global economy.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://atharva0123.github.io/Finance-trends/">
-
-  <!-- ================= TWITTER ================= -->
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="./assets/og-image.jpg"> <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Finance Trends India">
   <meta name="twitter:description" content="Global Finance & Emerging Technology Insights">
 
-  <!-- ================= GOOGLE ANALYTICS ================= -->
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF91YVYB3V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -38,7 +31,6 @@
     gtag('config', 'G-VF91YVYB3V');
   </script>
 
-  <!-- ================= SCHEMA ================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,181 +44,214 @@
   }
   </script>
 
-  <!-- ================= FONTS & STYLES ================= -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
 <header>
-  <nav class="navbar">
-    <div class="logo">Trends<span>Finance</span></div>
+  <nav class="navbar glass-effect">
+    <div class="logo">Trends<span class="highlight-text">Finance</span></div>
     <div class="nav-links">
-      <button id="dark-mode-toggle" aria-label="Toggle theme">🌙</button>
+      <button id="dark-mode-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button>
     </div>
   </nav>
 </header>
 
-<!-- ================= HERO ================= -->
 <section class="hero reveal">
-  <div class="hero-glass">
+  <div class="hero-content">
     <div class="grid-bg"></div>
-
-    <h1>Finance Trends India | Share Price Analysis, SIP & Market Insights</h1>
-
-    <p>
-      AI • Quantum Computing • Stock Markets • FinTech • Commodities • Global Economy
+    
+    <span class="pill-label">Market Intelligence v2.0</span>
+    <h1>Finance Trends India</h1>
+    <p class="hero-sub">
+      Analyzing the intersection of <strong>AI</strong>, <strong>Quantum Computing</strong>, and <strong>Global Markets</strong>.
     </p>
 
-    <button class="cta" onclick="document.getElementById('latest-insights').scrollIntoView({behavior:'smooth'})">
+    <div class="hero-tags">
+      <span>Stock Markets</span> • <span>FinTech</span> • <span>Commodities</span> • <span>Global Economy</span>
+    </div>
+
+    <button class="cta-primary" onclick="document.getElementById('latest-insights').scrollIntoView({behavior:'smooth'})">
       Explore Insights
     </button>
   </div>
   <div class="hero-glow"></div>
 </section>
 
-<!-- ================= GLOBAL DEBT ================= -->
 <section class="debt-ribbon reveal">
-  <h2>🌍 Global Debt — Live World Debt Clock</h2>
+  <div class="ribbon-header">
+    <h2>🌍 Global Debt Clock</h2>
+    <span class="live-dot"></span>
+  </div>
 
-  <div class="debt-frame tall">
+  <div class="debt-frame-wrapper">
     <iframe
       src="https://www.usdebtclock.org/world-debt-clock.html"
       title="World Debt Clock Live"
       loading="lazy"
       scrolling="no"
+      frameborder="0"
       referrerpolicy="no-referrer">
     </iframe>
   </div>
-
-  <p class="debt-note">
-    Source:
-    <a href="https://www.usdebtclock.org/world-debt-clock.html" target="_blank" rel="noopener">
-      US Debt Clock
-    </a>
-  </p>
+  
+  <p class="source-note">Data Source: <a href="https://www.usdebtclock.org" target="_blank" rel="noopener">US Debt Clock</a></p>
 </section>
 
-<!-- ================= MAIN ================= -->
-<section class="container">
+<div class="layout-wrapper">
 
-<main>
+  <main class="main-content">
 
-  <!-- ================= INSIGHTS ================= -->
-  <section class="insights-section" id="latest-insights">
-    <div class="section-header">
-      <h2>Latest Market & Technology Insights</h2>
-      <span class="live-indicator breaking">● Live</span>
-    </div>
-
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="ai">AI & Quantum</button>
-      <button class="filter-btn" data-filter="market">Stock Markets</button>
-      <button class="filter-btn" data-filter="fintech">FinTech</button>
-      <button class="filter-btn" data-filter="gold">Precious Metals</button>
-    </div>
-
-    <div id="news-container" class="posts-grid"></div>
-  </section>
-
-  <!-- ================= SEO BLOGS ================= -->
-  <section id="seo-blogs" class="insights-section">
-    <h2>Featured Finance Blogs</h2>
-    <div id="seo-blogs-container" class="posts-grid"></div>
-  </section>
-
-  <!-- ================= BLOOMBERG ================= -->
-  <section class="bloomberg reveal">
-    <div class="section-header">
-      <h2>Bloomberg-Style Global Brief</h2>
-      <span class="bb-tag">MARKET INTELLIGENCE</span>
-    </div>
-    <div id="bb-news" class="bb-list"></div>
-  </section>
-
-  <!-- ================= COMMUNITY ================= -->
-  <section class="community-section reveal" id="community">
-    <div class="community-header">
-      <div>
-        <h2>Community Insights</h2>
-        <p class="community-sub">Analyst notes & independent research</p>
+    <section class="bloomberg-terminal reveal">
+      <div class="terminal-header">
+        <div class="terminal-title">
+          <span class="terminal-icon">⚡</span> BLOOMBERG-STYLE GLOBAL BRIEF
+        </div>
+        <div class="terminal-meta">
+          <span class="live-badge">LIVE MARKETS</span>
+          <span id="terminal-time">--:--:--</span>
+        </div>
       </div>
-      <span class="community-pill">COMMUNITY</span>
+      
+      <div class="terminal-body">
+        <div id="bb-news" class="bb-feed-list">
+          <div class="loading-pulse">Fetching global intelligence...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="insights-section" id="latest-insights">
+      <div class="section-header">
+        <h2>Latest Technology & Market Insights</h2>
+      </div>
+
+      <div class="filters-scroll">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ai">AI & Quantum</button>
+        <button class="filter-btn" data-filter="market">Stock Markets</button>
+        <button class="filter-btn" data-filter="fintech">FinTech</button>
+        <button class="filter-btn" data-filter="gold">Commodities</button>
+      </div>
+
+      <div id="news-container" class="posts-grid"></div>
+    </section>
+
+    <section id="seo-blogs" class="insights-section reveal">
+      <div class="section-header">
+        <h2>Featured Finance Analysis</h2>
+      </div>
+      <div id="seo-blogs-container" class="posts-grid"></div>
+    </section>
+
+    <section class="community-section reveal" id="community">
+      <div class="community-card glass-panel">
+        <div class="community-header">
+          <h2>Community Insights</h2>
+          <span class="community-badge">OPEN FORUM</span>
+        </div>
+        <p class="community-sub">Share your independent research or analyst notes.</p>
+
+        <div class="compose-box">
+          <input type="text" id="blog-title" class="compose-input" placeholder="Enter Insight Title...">
+          <textarea id="blog-content" class="compose-area" rows="4" placeholder="What's your analysis on the market today?"></textarea>
+          <div class="compose-actions">
+            <button id="publishBtn" class="publish-btn">Publish Insight</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="blogs-container" class="community-feed">
+        </div>
+    </section>
+
+  </main>
+
+  <aside class="sidebar reveal">
+    
+    <div class="widget-card">
+      <h3>📊 Market Snapshot</h3>
+      <div id="market-snapshot" class="tv-widget-container"></div>
     </div>
 
-    <div class="community-compose">
-      <input id="blog-title" placeholder="Insight title">
-      <textarea id="blog-content" rows="4" placeholder="Write your analysis…"></textarea>
-      <button id="publishBtn">Publish Insight</button>
+    <div class="widget-card">
+      <h3>Live Quotes</h3>
+      <div class="tv-stack">
+        <div class="tv-block">
+          <span class="tv-label">Gold (XAU)</span>
+          <div id="tv-gold" class="mini-chart"></div>
+        </div>
+        <div class="tv-block">
+          <span class="tv-label">Silver (XAG)</span>
+          <div id="tv-silver" class="mini-chart"></div>
+        </div>
+        <div class="tv-block">
+          <span class="tv-label">Bitcoin (BTC)</span>
+          <div id="tv-bitcoin" class="mini-chart"></div>
+        </div>
+        <div class="tv-block">
+          <span class="tv-label">Crude Oil (WTI)</span>
+          <div id="tv-crude" class="mini-chart"></div>
+        </div>
+      </div>
     </div>
 
-    <div id="blogs-container" class="community-grid"></div>
-  </section>
+    <div class="widget-card">
+      <h3>🌍 Sector Heatmap</h3>
+      <div id="tv-heatmap" class="heatmap-container"></div>
+    </div>
 
-</main>
+  </aside>
 
-<!-- ================= SIDEBAR ================= -->
-<aside class="sidebar reveal">
+</div>
 
-  <div class="widget">
-    <h3>📊 Market Snapshot</h3>
-    <div id="market-snapshot"></div>
-  </div>
-
-  <div class="widget">
-    <h3>Markets Overview</h3>
-    <div class="tv-block"><div class="tv-title">Gold (XAU/USD)</div><div id="tv-gold"></div></div>
-    <div class="tv-block"><div class="tv-title">Silver (XAG/USD)</div><div id="tv-silver"></div></div>
-    <div class="tv-block"><div class="tv-title">Bitcoin (BTC/USD)</div><div id="tv-bitcoin"></div></div>
-    <div class="tv-block"><div class="tv-title">Crude Oil (WTI)</div><div id="tv-crude"></div></div>
-  </div>
-
-  <div class="widget">
-    <h3>🌍 Economic Heatmap</h3>
-    <div id="tv-heatmap"></div>
-  </div>
-
-</aside>
-
-</section>
-
-<!-- ================= FOOTER ================= -->
 <footer>
-  <div class="footer-links">
-
+  <div class="footer-content">
+    
     <div class="footer-col">
-      <h4>About</h4>
-      <a href="https://atharvakhobrekar.netlify.app/" target="_blank" rel="noopener">Portfolio & Contact</a>
+      <h4>About Us</h4>
+      <p>Bridging the gap between emerging technology and financial markets.</p>
+      <a href="https://atharvakhobrekar.netlify.app/" target="_blank" rel="noopener" class="footer-link">Contact / Portfolio</a>
     </div>
 
     <div class="footer-col">
       <h4>Tools</h4>
-      <a href="https://sipemicalculator.vercel.app/" target="_blank" rel="noopener">SIP & EMI Calculator</a>
-      <a href="https://finflowsipemistudio.vercel.app/" target="_blank" rel="noopener">SIP & EMI Studio</a>
+      <a href="https://sipemicalculator.vercel.app/" target="_blank" rel="noopener" class="footer-link">SIP & EMI Calculator</a>
+      <a href="https://finflowsipemistudio.vercel.app/" target="_blank" rel="noopener" class="footer-link">SIP & EMI Studio</a>
     </div>
 
     <div class="footer-col">
-      <h4>Topics</h4>
-      <span>AI in Finance</span>
-      <span>Quantum Computing</span>
-      <span>Markets</span>
-      <span>FinTech</span>
+      <h4>Trending Topics</h4>
+      <span class="footer-tag">AI Finance</span>
+      <span class="footer-tag">Quantum</span>
+      <span class="footer-tag">Nifty 50</span>
+      <span class="footer-tag">Forex</span>
     </div>
 
   </div>
-
-  <p class="footer-copy">© 2026 Finance Trends — Market Intelligence</p>
+  <div class="footer-bottom">
+    <p>© 2026 Finance Trends India — Market Intelligence</p>
+  </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
 <script defer src="script.js"></script>
 <script defer src="chart.js"></script>
 <script defer src="blogs.js"></script>
+
 <div class="cursor-glow"></div>
+
+<script>
+  setInterval(() => {
+    const timeDisplay = document.getElementById('terminal-time');
+    if(timeDisplay) {
+      timeDisplay.innerText = new Date().toLocaleTimeString('en-GB', { hour12: false }) + " UTC";
+    }
+  }, 1000);
+</script>
 
 </body>
 </html>
