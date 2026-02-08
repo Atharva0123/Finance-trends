@@ -2,7 +2,7 @@
   "use strict";
 
   /* ===============================
-     DEVICE + REGION DETECTION
+     DEVICE, REGION & THEME
   =============================== */
 
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -21,17 +21,16 @@
       : "light";
 
   /* ===============================
-     SAFE WIDGET LOADER
+     SAFE TRADINGVIEW LOADER
   =============================== */
 
   function safeLoadWidget(containerId, config, type = "chart") {
     const container = document.getElementById(containerId);
     if (!container) {
-      console.warn(`[TV] Missing container: #${containerId}`);
+      console.warn(`[TradingView] Container missing: #${containerId}`);
       return;
     }
 
-    // Avoid TradingView zero-width crash
     if (container.offsetWidth === 0) {
       requestAnimationFrame(() =>
         safeLoadWidget(containerId, config, type)
@@ -58,20 +57,29 @@
   }
 
   /* ===============================
-     SYMBOL MAP (REGION AWARE)
+     SYMBOL MAP (STABLE ONLY)
   =============================== */
 
-  const SYMBOLS = {
-    IN: {
-      sensex: "BSE:SENSEX",
-      nifty: "NSE:NIFTY1!",
-      nasdaq: "TVC:NDX"
-    },
-    GLOBAL: {
-      sensex: "TVC:NDX",
-      nifty: "TVC:SPX",
-      nasdaq: "TVC:NDX"
-    }
+  const INDICES = {
+    primary: [
+      { name: "BSE:SENSEX", label: "Sensex" },
+      { name: "NSE:NIFTY1!", label: "NIFTY 50" },
+      { name: "TVC:NDX", label: "NASDAQ 100" },
+      { name: "TVC:DJI", label: "Dow Jones" },
+      { name: "TVC:SPX", label: "S&P 500" }
+    ],
+    global: [
+      { name: "TVC:FTSE", label: "FTSE 100" },
+      { name: "TVC:DAX", label: "DAX 40" },
+      { name: "TVC:NI225", label: "Nikkei 225" },
+      { name: "TVC:HSI", label: "Hang Seng" },
+      { name: "TVC:VIX", label: "VIX Volatility" }
+    ],
+    commodities: [
+      { name: "TVC:GOLD", label: "Gold" },
+      { name: "TVC:SILVER", label: "Silver" },
+      { name: "TVC:USOIL", label: "Crude Oil (WTI)" }
+    ]
   };
 
   /* ===============================
@@ -83,32 +91,28 @@
       "market-snapshot",
       {
         width: "100%",
-        height: isMobile ? 260 : 380,
+        height: isMobile ? 300 : 420,
         symbolsGroups: [
           {
-            name: "Indices",
-            symbols: [
-              {
-                name: SYMBOLS[region].sensex,
-                displayName: "Sensex"
-              },
-              {
-                name: SYMBOLS[region].nifty,
-                displayName: "NIFTY 50"
-              },
-              {
-                name: SYMBOLS[region].nasdaq,
-                displayName: "NASDAQ 100"
-              }
-            ]
+            name: "Major Indices",
+            symbols: INDICES.primary.map(i => ({
+              name: i.name,
+              displayName: i.label
+            }))
+          },
+          {
+            name: "Global Markets",
+            symbols: INDICES.global.map(i => ({
+              name: i.name,
+              displayName: i.label
+            }))
           },
           {
             name: "Commodities",
-            symbols: [
-              { name: "TVC:GOLD", displayName: "Gold" },
-              { name: "TVC:SILVER", displayName: "Silver" },
-              { name: "TVC:USOIL", displayName: "Crude Oil" }
-            ]
+            symbols: INDICES.commodities.map(i => ({
+              name: i.name,
+              displayName: i.label
+            }))
           }
         ],
         showSymbolLogo: true,
@@ -120,7 +124,7 @@
   }
 
   /* ===============================
-     INDIVIDUAL CHARTS (RESPONSIVE)
+     INDIVIDUAL CHARTS
   =============================== */
 
   function loadCharts() {
@@ -176,28 +180,28 @@
   }
 
   /* ===============================
-     AUTO-REFRESH GLOW (PRICE MOVE)
+     AUTO-GLOW REFRESH
   =============================== */
 
   setInterval(() => {
     document
       .querySelectorAll(".glow-refresh")
       .forEach(el => el.classList.toggle("pulse"));
-  }, 8000);
+  }, 9000);
 
   /* ===============================
-     INITIALIZATION
+     INIT
   =============================== */
 
-  function initTradingView() {
+  function init() {
     loadMarketSnapshot();
     loadCharts();
     loadHeatmap();
   }
 
   if (document.readyState === "complete") {
-    setTimeout(initTradingView, 400);
+    setTimeout(init, 400);
   } else {
-    window.addEventListener("load", initTradingView, { once: true });
+    window.addEventListener("load", init, { once: true });
   }
 })();
