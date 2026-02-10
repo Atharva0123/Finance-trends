@@ -478,3 +478,52 @@ iframe { max-width: 100%; }
     color: black !important;
   }
 }
+
+/* ================= NEWSLETTER ================= */
+.newsletter {
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: #fff;
+  padding: 3rem;
+  border-radius: 16px;
+  text-align: center;
+  margin: 4rem auto;
+  max-width: 700px;
+}
+
+.newsletter h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.newsletter p {
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.newsletter form {
+  display: grid;
+  gap: 1rem;
+}
+
+.newsletter input,
+.newsletter select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+.newsletter button {
+  background: #22c55e;
+  color: #000;
+  font-weight: bold;
+  padding: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.newsletter small {
+  display: block;
+  margin-top: 1rem;
+  opacity: 0.7;
+}
