@@ -191,6 +191,31 @@ function initCursor() {
 }
 
 /* =====================================================
+   NEWSLETTER MODAL INTERACTION
+===================================================== */
+const openNewsletter = document.getElementById("openNewsletter");
+const closeNewsletter = document.getElementById("closeNewsletter");
+const newsletterOverlay = document.getElementById("newsletterOverlay");
+
+if (openNewsletter && newsletterOverlay) {
+  openNewsletter.onclick = () => {
+    newsletterOverlay.style.display = "flex";
+  };
+}
+
+if (closeNewsletter && newsletterOverlay) {
+  closeNewsletter.onclick = () => {
+    newsletterOverlay.style.display = "none";
+  };
+}
+
+newsletterOverlay?.addEventListener("click", e => {
+  if (e.target === newsletterOverlay) {
+    newsletterOverlay.style.display = "none";
+  }
+});
+
+/* =====================================================
    INITIALIZE
 ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -203,3 +228,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initFilters();
   handleBlogRouting();
 });
+
