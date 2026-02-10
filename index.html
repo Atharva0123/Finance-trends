@@ -134,6 +134,9 @@
     <div class="nav-links">
 
       <button id="dark-mode-toggle" aria-label="Toggle theme">🌙</button>
+    <button class="subscribe-btn" id="openNewsletter">
+      📩 Subscribe
+    </button>
 
     </div>
 
@@ -386,9 +389,53 @@
 </aside>
 
 
-
 </section>
 
+<!-- ================= NEWSLETTER MODAL ================= -->
+<div class="newsletter-overlay" id="newsletterOverlay">
+  <div class="newsletter-modal">
+    
+    <button class="close-newsletter" id="closeNewsletter">✕</button>
+
+    <h2>📈 Market Insights Newsletter</h2>
+    <p>
+      Weekly insights on <strong>Jio Finance, Bajaj Finance, SIP strategies</strong>,
+      and Indian market trends — directly to your inbox.
+    </p>
+
+    <form 
+      action="https://formspree.io/f/xvzbgnrk" 
+      method="POST"
+      class="newsletter-form"
+    >
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="Enter your email address"
+        required
+      >
+
+      <select name="interest">
+        <option value="All">All Finance Topics</option>
+        <option value="Stocks">Stock Market</option>
+        <option value="SIP">SIP & Mutual Funds</option>
+        <option value="FinTech">FinTech & Digital Payments</option>
+      </select>
+
+      <input type="hidden" name="_subject" value="New Newsletter Subscription">
+      <input type="hidden" name="_template" value="table">
+
+      <button type="submit">
+        Subscribe Free →
+      </button>
+    </form>
+
+    <small>
+      No spam • Unsubscribe anytime • Trusted finance insights
+    </small>
+
+  </div>
+</div>
 
 
 <!-- ================= FOOTER ================= -->
@@ -445,44 +492,6 @@
 
 </footer>
 
-<!-- ================= newsletter ================= -->
-  
-<section class="newsletter reveal">
-  <h2>📈 Market Insights Newsletter</h2>
-  <p>
-    Get weekly finance insights on Jio Finance, SIP strategies, stock market trends
-    and long-term wealth creation — straight to your inbox.
-  </p>
-
-  <form action="https://formspree.io/f/xvzbgnrk" method="POST">
-    <input type="text" name="name" placeholder="Your Name (optional)">
-    
-    <input 
-      type="email" 
-      name="email" 
-      placeholder="Your Email Address" 
-      required
-    >
-
-    <select name="interest">
-      <option value="All">All Finance Topics</option>
-      <option value="Stocks">Stock Market</option>
-      <option value="SIP">SIP & Mutual Funds</option>
-      <option value="FinTech">FinTech & Digital Payments</option>
-    </select>
-
-    <!-- Spam Protection -->
-    <input type="hidden" name="_subject" value="New Newsletter Subscription">
-    <input type="hidden" name="_template" value="table">
-
-    <button type="submit">Subscribe Free →</button>
-  </form>
-
-  <small>
-    No spam. Unsubscribe anytime.
-  </small>
-</section>
-
 
 <!-- ================= SCRIPTS ================= -->
 
@@ -497,4 +506,5 @@
 </body>
 
 </html>
+
 
