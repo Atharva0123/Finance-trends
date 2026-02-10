@@ -445,6 +445,43 @@
 
 </footer>
 
+<!-- ================= newsletter ================= -->
+  
+<section class="newsletter reveal">
+  <h2>📈 Market Insights Newsletter</h2>
+  <p>
+    Get weekly finance insights on Jio Finance, SIP strategies, stock market trends
+    and long-term wealth creation — straight to your inbox.
+  </p>
+
+  <form action="https://formspree.io/f/abcdwxyz" method="POST">
+    <input type="text" name="name" placeholder="Your Name (optional)">
+    
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="Your Email Address" 
+      required
+    >
+
+    <select name="interest">
+      <option value="All">All Finance Topics</option>
+      <option value="Stocks">Stock Market</option>
+      <option value="SIP">SIP & Mutual Funds</option>
+      <option value="FinTech">FinTech & Digital Payments</option>
+    </select>
+
+    <!-- Spam Protection -->
+    <input type="hidden" name="_subject" value="New Newsletter Subscription">
+    <input type="hidden" name="_template" value="table">
+
+    <button type="submit">Subscribe Free →</button>
+  </form>
+
+  <small>
+    No spam. Unsubscribe anytime.
+  </small>
+</section>
 
 
 <!-- ================= SCRIPTS ================= -->
@@ -460,4 +497,3 @@
 </body>
 
 </html>
-
