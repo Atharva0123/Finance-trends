@@ -134,7 +134,7 @@
     <div class="nav-links">
 
       <button id="dark-mode-toggle" aria-label="Toggle theme">🌙</button>
-    <button class="subscribe-btn" id="openNewsletter">
+    <button class="subscribe-btn" id="scrollToNewsletter">
       📩 Subscribe
     </button>
 
@@ -387,57 +387,63 @@
 
 
 </aside>
-
-
 </section>
 
 <!-- ================= NEWSLETTER MODAL ================= -->
-<div class="newsletter-overlay" id="newsletterOverlay">
-  <div class="newsletter-modal">
-    
-    <button class="close-newsletter" id="closeNewsletter">✕</button>
+<section id="newsletter" class="newsletter-section">
+  <div class="newsletter-box">
 
     <h2>📈 Market Insights Newsletter</h2>
     <p>
-      Weekly insights on <strong>Jio Finance, Bajaj Finance, SIP strategies</strong>,
-      and Indian market trends — directly to your inbox.
+      Actionable insights on <strong>Jio Finance, Bajaj Finance,
+      Small Finance Banks, SIP & EMI planning</strong>.
     </p>
 
-    <form 
-      action="https://formspree.io/f/xvzbgnrk" 
+    <form
+      id="newsletterForm"
+      action="https://formspree.io/f/xvzbgnrk"
       method="POST"
-      class="newsletter-form"
+      novalidate
     >
-      <input 
-        type="email" 
-        name="email" 
-        placeholder="Enter your email address"
+      <input
+        type="email"
+        name="email"
+        id="newsletterEmail"
+        placeholder="Enter your email"
         required
       >
 
-      <select name="interest">
-        <option value="All">All Finance Topics</option>
-        <option value="Stocks">Stock Market</option>
-        <option value="SIP">SIP & Mutual Funds</option>
-        <option value="FinTech">FinTech & Digital Payments</option>
-      </select>
-
-      <input type="hidden" name="_subject" value="New Newsletter Subscription">
-      <input type="hidden" name="_template" value="table">
+      <span class="email-feedback" id="emailFeedback"></span>
 
       <button type="submit">
         Subscribe Free →
       </button>
     </form>
 
-    <small>
-      No spam • Unsubscribe anytime • Trusted finance insights
-    </small>
+    <div class="thank-you" id="thankYou">
+      ✅ Thanks for subscribing!  
+      <span>You’ll receive your first market insight soon.</span>
+    </div>
 
+  </div>
+</section>
+
+<div class="exit-popup" id="exitPopup">
+  <div class="exit-box">
+    <button class="exit-close" id="exitClose">✕</button>
+
+    <h3>Before you go… 📊</h3>
+    <p>
+      Get weekly stock & SIP insights trusted by Indian investors.
+    </p>
+
+    <button class="exit-cta" id="exitScroll">
+      Subscribe Newsletter
+    </button>
   </div>
 </div>
 
-
+  
 <!-- ================= FOOTER ================= -->
 
 <footer>
@@ -506,5 +512,6 @@
 </body>
 
 </html>
+
 
 
