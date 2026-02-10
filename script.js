@@ -216,6 +216,66 @@ newsletterOverlay?.addEventListener("click", e => {
 });
 
 /* =====================================================
+   SCROLL TO NEWSLETTER
+===================================================== */
+document.getElementById("scrollToNewsletter")?.addEventListener("click", () => {
+  document.getElementById("newsletter")?.scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+/* =====================================================
+   EMAIL VALIDATION + THANK YOU
+===================================================== */
+const form = document.getElementById("newsletterForm");
+const emailInput = document.getElementById("newsletterEmail");
+const feedback = document.getElementById("emailFeedback");
+const thankYou = document.getElementById("thankYou");
+
+emailInput?.addEventListener("input", () => {
+  const email = emailInput.value;
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (!email) {
+    feedback.textContent = "";
+  } else if (!valid) {
+    feedback.textContent = "Please enter a valid email address";
+    feedback.className = "email-feedback error";
+  } else {
+    feedback.textContent = "Looks good ✔";
+    feedback.className = "email-feedback success";
+  }
+});
+
+form?.addEventListener("submit", () => {
+  setTimeout(() => {
+    form.style.display = "none";
+    thankYou.style.display = "block";
+  }, 500);
+});
+
+/* =====================================================
+   EXIT INTENT (DESKTOP ONLY)
+===================================================== */
+let exitShown = false;
+
+document.addEventListener("mouseleave", e => {
+  if (e.clientY <= 0 && !exitShown && window.innerWidth > 768) {
+    document.getElementById("exitPopup").style.display = "flex";
+    exitShown = true;
+  }
+});
+
+document.getElementById("exitClose")?.addEventListener("click", () => {
+  document.getElementById("exitPopup").style.display = "none";
+});
+
+document.getElementById("exitScroll")?.addEventListener("click", () => {
+  document.getElementById("exitPopup").style.display = "none";
+  document.getElementById("newsletter").scrollIntoView({ behavior: "smooth" });
+});
+
+/* =====================================================
    INITIALIZE
 ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -228,4 +288,3 @@ document.addEventListener("DOMContentLoaded", () => {
   initFilters();
   handleBlogRouting();
 });
-
