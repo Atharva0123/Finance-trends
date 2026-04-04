@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atharva0123.github.io/Finance-trends/sitemap.xml
